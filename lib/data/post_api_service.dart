@@ -1,5 +1,5 @@
 import 'package:chopper/chopper.dart';
-import 'package:chopper/chopper.dart';
+
 
 
 part 'post_api_service.chopper.dart';
