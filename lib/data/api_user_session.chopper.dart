@@ -14,9 +14,9 @@ class _$UserSession extends UserSession {
 
   final definitionType = UserSession;
 
-  Future<Response> login(String auth, Map map) {
-    final $url = '/api/user/sessions/user/sessions';
-    final $headers = {'Authorization': auth};
+  Future<Response> login(String auth, Map map, String type) {
+    final $url = '/api/user/sessions';
+    final $headers = {'Authorization': auth,"Content-Type": type};
     final $body = map;
     final $request =
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);

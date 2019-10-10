@@ -1,20 +1,22 @@
 import 'package:chopper/chopper.dart';
 
+
 part 'api_user_session.chopper.dart';
 
-@ChopperApi(baseUrl: "/api/user/sessions")
+@ChopperApi(baseUrl: "")
 
 abstract class UserSession extends ChopperService{
 
 
 
-  @Post(path: "user/sessions")
-  Future<Response> login(@Header("Authorization") String auth,@body Map map);
+  @Post(path: "/api/user/sessions")
+  Future<Response> login(@Header("Authorization") String auth,@body Map map,
+      @Header("Content-Type" )String type);
 
 
   static UserSession create(){
     final client = ChopperClient(
-      baseUrl: "https://vinnoba.com/vinnoba" ,
+      baseUrl: "https://vinnoba.com/vinnobaapi" ,
       services:[
         _$UserSession(),
       ],converter: JsonConverter(),);

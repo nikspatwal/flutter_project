@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget{
 
     return Provider(
         builder: (_) => UserSession.create(),
-    dispose: (_, UserSession service) => service.client.dispose(),
+    dispose: (__, UserSession service) => service.client.dispose(),
     child:MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Material App",
