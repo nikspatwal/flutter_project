@@ -1,6 +1,7 @@
 import 'package:chopper/chopper.dart';
 
 
+
 part 'api_user_session.chopper.dart';
 
 @ChopperApi(baseUrl: "")
@@ -19,7 +20,7 @@ abstract class UserSession extends ChopperService{
       baseUrl: "https://vinnoba.com/vinnobaapi" ,
       services:[
         _$UserSession(),
-      ],converter: JsonConverter(),);
+      ],converter: JsonConverter());
 
 
     return _$UserSession(client);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vinnoba/screens/login_page.dart';
+import 'package:vinnoba/screens/LoginPage.dart';
 
-import 'data/api_user_session.dart';
+import 'utils/api_user_session.dart';
 
 
 void main() => runApp(MyApp());

@@ -18,8 +18,7 @@ class _$UserSession extends UserSession {
     final $url = '/api/user/sessions';
     final $headers = {'Authorization': auth,"Content-Type": type};
     final $body = map;
-    final $request =
-        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    final $request = Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic,dynamic>($request);
   }
 }
