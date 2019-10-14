@@ -56,11 +56,12 @@ class LoginState extends State<Login> {
                               bottom: 20.0 ,
                               right: 50.0 ,
                               left: 50.0 ) ,
+
+
                           child: TextFormField(
                               controller: userController ,
                               style: TextStyle(
                                   color: Colors.white70 ,
-                                  fontWeight: FontWeight.bold ,
                                   fontSize: 17.0 ,
                                   decoration: TextDecoration.none ) ,
                               decoration: InputDecoration(
@@ -92,7 +93,6 @@ class LoginState extends State<Login> {
                             controller: passwordController ,
                             style: TextStyle(
                                 color: Colors.white70 ,
-                                fontWeight: FontWeight.bold ,
                                 fontSize: 17.0 ,
                                 decoration: TextDecoration.none ) ,
                             obscureText: isHidden ,
