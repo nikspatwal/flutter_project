@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vinnoba/screens/LoginPage.dart';
-import 'package:vinnoba/screens/YesNo.dart';
-
 import 'utils/api_user_session.dart';
 
 
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget{
     child:MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Material App",
-      home: YesNo(),
+      home: LoginPage(),
     )
     );
   }

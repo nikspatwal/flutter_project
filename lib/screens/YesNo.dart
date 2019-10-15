@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vinnoba/screens/HomePage.dart';
+import 'package:vinnoba/screens/SeconeHomePage.dart';
 
 class YesNo extends StatefulWidget{
    @override
@@ -51,7 +53,12 @@ class YesNo extends StatefulWidget{
                       child:Text("YES",style: TextStyle(color: Colors.white,
                           ),
                       textScaleFactor: 1.2,) ,
-                      onPressed: (){}),
+                      onPressed: (){
+                        /*Navigator.push(context, MaterialPageRoute(
+                          builder: (context) =>HomePage()
+                        )
+                        );*/
+                      }),
                 ),),
 
 
@@ -67,7 +74,12 @@ class YesNo extends StatefulWidget{
 
                       child:Text("NO",style: TextStyle(color: Colors.white,
                           ),textScaleFactor: 1.2,) ,
-                      onPressed:(){}),
+                      onPressed:(){
+                        /*Navigator.push(context, MaterialPageRoute(
+                            builder: (context) =>SecondHomePage()
+                        )
+                        );*/
+                      }),
                 ),)
 
             ],) ,))

@@ -9,15 +9,15 @@ import 'package:vinnoba/utils/BasicUtils.dart';
 import 'package:vinnoba/utils/api_user_session.dart';
 
 
-class Login extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState(
       ) {
-    return LoginState( );
+    return LoginPageState( );
   }
 }
 
-class LoginState extends State<Login> {
+class LoginPageState extends State<LoginPage> {
   var formKey = GlobalKey<FormState>( );
   bool flag = false;
 
@@ -49,7 +49,7 @@ class LoginState extends State<Login> {
                 child: Container(
                   child: Form(
                       key: formKey ,
-                      child: ListView( children: <Widget>[
+                      child: Center(child: ListView( children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(
                               top: 250.0 ,
@@ -67,7 +67,7 @@ class LoginState extends State<Login> {
                               decoration: InputDecoration(
                                 labelText: "Username" ,
                                 labelStyle: TextStyle(
-                                    color: Colors.white70 ,),
+                                  color: Colors.white70 ,),
                                 errorStyle: TextStyle( color: Colors.red ) ,
                                 prefixIcon: Icon(
                                   Icons.person ,
@@ -100,7 +100,7 @@ class LoginState extends State<Login> {
                             decoration: InputDecoration(
                                 labelText: "Password" ,
                                 labelStyle: TextStyle(
-                                    color: Colors.white70 , ) ,
+                                  color: Colors.white70 , ) ,
                                 errorStyle: TextStyle( color: Colors.red ) ,
                                 prefixIcon: Icon(
                                   Icons.lock ,
@@ -131,20 +131,20 @@ class LoginState extends State<Login> {
                                 right: 50.0 ,
                                 left: 50.0 ) ,
                             child: RaisedButton(
-                                child: Text( "Sign In" ,
-                                    style: TextStyle( color: Colors.white70 ) ) ,
-                                color: Colors.indigoAccent ,
-                                elevation: 6.0 ,
-                                onPressed:(){
-                                  clickedOne();
-                                  flag?navigateTo():Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                      
-                                },                            )
+                              child: Text( "Sign In" ,
+                                  style: TextStyle( color: Colors.white70 ) ) ,
+                              color: Colors.indigoAccent ,
+                              elevation: 6.0 ,
+                              onPressed:(){
+                                clickedOne();
+                                flag?navigateTo():Center(
+                                  child: CircularProgressIndicator(),
+                                );
+
+                              },                            )
                         ) ,
 
-                      ] )
+                      ] ),)
                   ) ,
 
 
@@ -157,6 +157,9 @@ class LoginState extends State<Login> {
   apiCalling(
       BuildContext context ,String username ,String password ,Map map
       ) async {
+//    final client = ChopperClient().get(
+//        "https://vinnoba.com/vinnobaapi").timeout(Duration(seconds: 10));
+
     String credentials = username + ":" + password;
 
     String auth = "Basic " + base64.encode( utf8.encode( credentials ) );
@@ -164,7 +167,9 @@ class LoginState extends State<Login> {
     Response response = await Provider.of<UserSession>( context )
         .login( auth ,map ,"application/json" , );
     Map headers = response.headers;
+    print(headers.toString());
     Map body = json.decode( response.bodyString );
+    print(body.toString());
     flag =true;
     BasicUtils.savePreferences( PrefKeys.token ,headers['x-auth-token'] );
     BasicUtils.savePreferences(PrefKeys.refreshToken, headers['refresh_token']);
