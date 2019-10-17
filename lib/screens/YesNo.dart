@@ -15,17 +15,18 @@ class YesNo extends StatefulWidget{
 
      return Scaffold(
        backgroundColor: Colors.white,
-       body: Column(
+       body: SingleChildScrollView(
+         child: Column(
          children: <Widget>[
 
-          Expanded(child: Padding(padding: EdgeInsets.only(
+          Padding(padding: EdgeInsets.only(
               top: 50.0,bottom: 50.0,right: 20.0),
             child: Image.asset('assets/images/building1.jpg',fit: BoxFit.fill,
 
               /*alignment: Alignment.topCenter,*/),
-          )),
+          ),
 
-          Expanded(child: Container(
+          Container(
 
             alignment: Alignment.bottomCenter,
             child:Column(children: <Widget>[
@@ -53,12 +54,8 @@ class YesNo extends StatefulWidget{
                       child:Text("YES",style: TextStyle(color: Colors.white,
                           ),
                       textScaleFactor: 1.2,) ,
-                      onPressed: (){
-                        /*Navigator.push(context, MaterialPageRoute(
-                          builder: (context) =>HomePage()
-                        )
-                        );*/
-                      }),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()))
+                  ),
                 ),),
 
 
@@ -74,38 +71,19 @@ class YesNo extends StatefulWidget{
 
                       child:Text("NO",style: TextStyle(color: Colors.white,
                           ),textScaleFactor: 1.2,) ,
-                      onPressed:(){
-                        /*Navigator.push(context, MaterialPageRoute(
-                            builder: (context) =>SecondHomePage()
-                        )
-                        );*/
-                      }),
+                      onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) => SecondHomePage()))),
                 ),)
 
-            ],) ,))
+            ],) ,)
 
      
          ],
        ),
+     )
      );
      
    }
-   
-/* Widget picture(){
-     AssetImage assetImage =AssetImage("assets/images/building1.jpg");
-     Image image = Image(image: assetImage,fit: BoxFit.contain,
-     width: 500.0,
-     height: 500.0, );
 
-     return Container(
-       padding: EdgeInsets.only(top:20.0,left: 20.0,right: 20.0),
-       alignment: Alignment.topCenter,
-       child: Center(
-         child: image
-       ),
-     );
-
-   }*/
 
  
     

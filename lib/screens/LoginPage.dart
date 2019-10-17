@@ -59,6 +59,7 @@ class LoginPageState extends State<LoginPage> {
 
 
                           child: TextFormField(
+                              keyboardType: TextInputType.text,
                               controller: userController ,
                               style: TextStyle(
                                   color: Colors.white70 ,
@@ -135,13 +136,7 @@ class LoginPageState extends State<LoginPage> {
                                   style: TextStyle( color: Colors.white70 ) ) ,
                               color: Colors.indigoAccent ,
                               elevation: 6.0 ,
-                              onPressed:(){
-                                clickedOne();
-                                flag?navigateTo():Center(
-                                  child: CircularProgressIndicator(),
-                                );
-
-                              },                            )
+                              onPressed:navigateTo)
                         ) ,
 
                       ] ),)
@@ -157,15 +152,11 @@ class LoginPageState extends State<LoginPage> {
   apiCalling(
       BuildContext context ,String username ,String password ,Map map
       ) async {
-//    final client = ChopperClient().get(
-//        "https://vinnoba.com/vinnobaapi").timeout(Duration(seconds: 10));
-
     String credentials = username + ":" + password;
-
     String auth = "Basic " + base64.encode( utf8.encode( credentials ) );
     print( "$map,$auth,$username,$password" );
     Response response = await Provider.of<UserSession>( context )
-        .login( auth ,map ,"application/json" , );
+        .login( auth ,map ,"application/json" , ).timeout(Duration(seconds: 150));
     Map headers = response.headers;
     print(headers.toString());
     Map body = json.decode( response.bodyString );

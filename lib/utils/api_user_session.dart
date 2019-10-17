@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:chopper/chopper.dart';
 
@@ -18,14 +18,12 @@ abstract class UserSession extends ChopperService{
 
 
   static UserSession create(){
-//    final httpclient = new HttpClient();
-//    httpclient.connectionTimeout = const Duration(seconds: 5);
     final client = ChopperClient(
       baseUrl: "https://vinnoba.com/vinnobaapi" ,
       services:[
         _$UserSession(),
       ],converter: JsonConverter());
-    ;
+    
 
 
     return _$UserSession(client);
