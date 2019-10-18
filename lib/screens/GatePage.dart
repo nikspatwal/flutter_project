@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vinnoba/screens/HomePage.dart';
 
 class GatePage extends StatefulWidget{
   @override
@@ -43,7 +44,7 @@ class GatePageState extends State<GatePage>{
                     child: Image.asset('assets/images/visitor.png'),
                   ),
 
-                  Expanded(child: Container(
+                  Container(
 
                     width: 200.0,
                     height: 50,
@@ -58,7 +59,7 @@ class GatePageState extends State<GatePage>{
                             alignedDropdown: true,
                             child: DropdownButton<String>(
                               value: dropdownValue,
-                              icon: Icon(Icons.arrow_downward),
+                              icon: Icon(Icons.keyboard_arrow_down),
                               iconSize: 24,
                               elevation: 16,
 
@@ -77,12 +78,12 @@ class GatePageState extends State<GatePage>{
                             )
 
                         )),
-                  ),),
+                  ),
 
 
 
                   Padding(padding:
-                  EdgeInsets.only(top: 5.0,bottom: 5.0),
+                  EdgeInsets.only(top: 50.0,bottom: 5.0),
                     child:ButtonTheme(minWidth: 300.0,height: 50.0,
                       buttonColor: Colors.black,
                       shape: RoundedRectangleBorder(
@@ -93,7 +94,7 @@ class GatePageState extends State<GatePage>{
 
                           child:Text("NEXT",style: TextStyle(color: Colors.white,
                           ),textScaleFactor: 1.2,) ,
-                          onPressed:() {} /*=> Navigator.push(context, MaterialPageRoute(builder: (context) => SecondHomePage()))*/
+                          onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()))
                       ),
                     ),)
 

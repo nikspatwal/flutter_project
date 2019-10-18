@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vinnoba/screens/GatePage.dart';
 import 'package:vinnoba/screens/HomePage.dart';
 import 'package:vinnoba/screens/SeconeHomePage.dart';
 
@@ -54,7 +55,7 @@ class YesNo extends StatefulWidget{
                       child:Text("YES",style: TextStyle(color: Colors.white,
                           ),
                       textScaleFactor: 1.2,) ,
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()))
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GatePage()))
                   ),
                 ),),
 
