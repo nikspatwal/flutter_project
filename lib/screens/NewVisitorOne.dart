@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vinnoba/screens/FormPage.dart';
 
 class NewVisitorOne extends StatefulWidget{
   @override
@@ -84,7 +85,7 @@ class NewVisitorOneState extends State<NewVisitorOne>{
 
                         child:Text("NEXT",style: TextStyle(color: Colors.white,
                         ),textScaleFactor: 1.2,) ,
-                        onPressed:() {} /*=> Navigator.push(context, MaterialPageRoute(builder: (context) => SecondHomePage()))*/
+                        onPressed:()  => Navigator.push(context, MaterialPageRoute(builder: (context) =>  FormPage()))
                     ),
                   ),)
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vinnoba/screens/CameraCaptureOne.dart';
+import 'package:vinnoba/screens/CameraCaptureTwo.dart';
 
 
 class FormPage extends StatefulWidget {
@@ -29,9 +31,10 @@ class FormPageState extends State<FormPage>{
           ]),) ,
         backgroundColor: Colors.white ,
       body:TabBarView(
+        physics: NeverScrollableScrollPhysics(),
           children: [
             first(),
-            Icon(Icons.camera_alt)
+            CameraCaptureTwo()
           ]),
 
     )
@@ -39,7 +42,8 @@ class FormPageState extends State<FormPage>{
   }
 
   first(){
-    return Column(
+    return ListView(
+
       children: <Widget>[
         Padding(padding: EdgeInsets.only(top: 20.0,bottom: 10.0),
           child: TextFormField(
@@ -162,7 +166,31 @@ class FormPageState extends State<FormPage>{
 
 
       ],
-    )
+    ),
+        Container(
+          width: 300.0,
+          height: 300.0,
+          ),
+
+        Container(alignment: Alignment.bottomCenter,
+
+            padding: EdgeInsets.all(10.0),
+            child: ButtonTheme(
+              minWidth: 300.0,height: 50.0,
+              buttonColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              child: RaisedButton(
+                  elevation:2.0,
+                  color: Colors.black,
+
+                  child:Text("NEXT",style: TextStyle(color: Colors.white,
+                  ),textScaleFactor: 1.2,) ,
+                  onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) =>  CameraCaptureOne()))
+              ),
+            ))
+
+
     ]
     );
   }
