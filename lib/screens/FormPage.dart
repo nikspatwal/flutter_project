@@ -1,8 +1,6 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:vinnoba/screens/CameraCaptureOne.dart';
 import 'package:vinnoba/screens/CameraCaptureTwo.dart';
-
-
 class FormPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState(
@@ -11,40 +9,71 @@ class FormPage extends StatefulWidget {
   }
 }
 
-class FormPageState extends State<FormPage>{
+class FormPageState extends State<FormPage> with SingleTickerProviderStateMixin{
   TextEditingController nameController = TextEditingController();
   int radioValue=0;
+
+  final List<Tab> myTabs = <Tab>[
+    new Tab(text: 'Basic'),
+    new Tab(text: 'Camera'),
+  ];
+
+  TabController tabController;
+
+
+  CameraController camController;
+  Future<void> initializeControllerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = new TabController(vsync: this, length: myTabs.length);
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
+  initiate() async {
+    final cameras = await availableCameras();
+    final firstCam = cameras.first;
+    camController = CameraController(firstCam, ResolutionPreset.medium);
+    initializeControllerFuture = camController.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return DefaultTabController(
-        length: 2,
-        child:
-
-      Scaffold(
+    return Scaffold(
       appBar: AppBar( title: Text( "Manage Visitors" ) ,
         backgroundColor: Colors.lightBlueAccent ,
         bottom: TabBar(
-          tabs: [
-            Tab(text: "Basics",),
-            Tab(text: "Camera",)
-          ]),) ,
+          controller: tabController,
+          tabs: myTabs,
+          onTap: (index){
+            setState(() {
+              tabController.index = 0;
+            });
+          })
+        ) ,
         backgroundColor: Colors.white ,
       body:TabBarView(
+        controller: tabController,
         physics: NeverScrollableScrollPhysics(),
           children: [
             first(),
-            CameraCaptureTwo()
+            cameraCaptureOne()
           ]),
 
-    )
+
     );
   }
 
   first(){
-    return ListView(
-
-      children: <Widget>[
+    return SingleChildScrollView(child:
+      Column( children: <Widget>[
         Padding(padding: EdgeInsets.only(top: 20.0,bottom: 10.0),
           child: TextFormField(
               keyboardType: TextInputType.text,
@@ -167,6 +196,8 @@ class FormPageState extends State<FormPage>{
 
       ],
     ),
+
+
         Container(
           width: 300.0,
           height: 300.0,
@@ -186,12 +217,39 @@ class FormPageState extends State<FormPage>{
 
                   child:Text("NEXT",style: TextStyle(color: Colors.white,
                   ),textScaleFactor: 1.2,) ,
-                  onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) =>  CameraCaptureOne()))
+                  onPressed:() => tabController.animateTo((tabController.index + 1) % 2)
+                /*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*/
               ),
             ))
 
 
     ]
+    ));
+
+
+
+
+  }
+
+  cameraCaptureOne(){
+
+    return  Container(alignment: Alignment.bottomCenter,
+            height: 40.0,
+            width: 70.0,
+            padding: EdgeInsets.all(10.0),
+            child: /*ButtonTheme(
+              buttonColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+              child: */RaisedButton(
+                  elevation:2.0,
+                  color: Colors.black,
+
+                  child:Text("CAPTURE",style: TextStyle(color: Colors.white,
+                  ),textScaleFactor: 1.2,) ,
+                  onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) => CameraCaptureTwo()))
+              ),
+
     );
   }
 }

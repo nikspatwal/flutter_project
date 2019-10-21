@@ -6,32 +6,29 @@ import 'package:vinnoba/screens/DisplayPictureScreen.dart';
 
 class CameraCaptureTwo extends StatefulWidget {
   @override
-  State<StatefulWidget> createState(
-      ) {
-    // TODO: implement createState
-    return CameraCaptureTwoState( );
+  State<StatefulWidget> createState() {
+    return CameraCaptureTwoState();
   }
 }
 
 class CameraCaptureTwoState extends State<CameraCaptureTwo> {
   CameraController camController;
   Future<void> initializeControllerFuture;
-  List<CameraDescription> cameras;
 
   @override
   void initState() {
     super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
-    camController = CameraController(
-      // Get a specific camera from the list of available cameras.
-      cameras[0],
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
+    initiate();
+  }
 
-    // Next, initialize the controller. This returns a Future.
+  initiate() async {
+    final cameras = await availableCameras();
+    final firstCam = cameras.first;
+    camController = CameraController(firstCam, ResolutionPreset.medium);
     initializeControllerFuture = camController.initialize();
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -41,69 +38,44 @@ class CameraCaptureTwoState extends State<CameraCaptureTwo> {
     super.dispose();
   }
 
-  selectCam() async {
-    cameras = await availableCameras();}
-
   @override
-  Widget build(
-      BuildContext context
-      ) {
-
-     selectCam();
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text( "Say CHEESE!!..." ) , ) ,
-
-
+          title: Text("Say CHEESE!!..."),
+        ),
         body: FutureBuilder<void>(
-            future: initializeControllerFuture ,
-            builder: (
-                context ,snapshot
-                ) {
-              if(snapshot.connectionState == ConnectionState.done){
-                return CameraPreview( camController );
-              }
-              else {
+            future: initializeControllerFuture,
+            builder: (context, snapshot) {
+              print(snapshot);
+              print('The string is    ${snapshot.connectionState}');
+              if (snapshot.connectionState == ConnectionState.done)  {
+                return  CameraPreview(camController);
+              } else {
                 return Center(
-                  child: CircularProgressIndicator( ) ,
+                  child: CircularProgressIndicator(),
                 );
               }
-            }
-        ) ,
-
-
+            }),
         floatingActionButton: FloatingActionButton(
-            child: Icon( Icons.camera_alt ) ,
-            onPressed: (
-                ) async {
-              selectCam( );
-
+            child: Icon(Icons.camera_alt),
+            onPressed: () async {
               try {
                 await initializeControllerFuture;
 
-                final imagePath = join(
-                    (await getTemporaryDirectory( )).path ,
-                    '${DateTime.now( )}.png' );
+                final imagePath = join((await getTemporaryDirectory()).path,
+                    '${DateTime.now()}.png');
 
                 await camController.takePicture(imagePath);
 
                 Navigator.push(
-                    context, MaterialPageRoute(
-                  builder: (context)=> DisplayPictureScreen(imagePath)),);
-              }
-              catch(e){
-
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DisplayPictureScreen(imagePath)),
+                );
+              } catch (e) {
                 print(e);
               }
-            }
-
-        )
-
-    );
+            }));
   }
-
-
 }
-
-
-
