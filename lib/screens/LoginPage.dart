@@ -138,8 +138,8 @@ class LoginPageState extends State<LoginPage> {
                               elevation: 6.0 ,
                               onPressed:(){
                                 clickedOne();
-//                                flag?navigateTo():
-//                                    CircularProgressIndicator()
+                                flag?navigateTo():
+                                    CircularProgressIndicator();
 
                               })
                         ) ,
@@ -163,8 +163,10 @@ class LoginPageState extends State<LoginPage> {
     Response response = await Provider.of<UserSession>( context )
         .login( auth ,map ,"application/json" , );
     Map headers = response.headers;
+    print("HEADERS.............");
     print(headers.toString());
     Map body = json.decode( response.bodyString );
+    print("BODY...........");
     print(body.toString());
     flag =true;
     BasicUtils.savePreferences( PrefKeys.token ,headers['x-auth-token'] );
@@ -187,6 +189,7 @@ class LoginPageState extends State<LoginPage> {
         Map<String , String> map = {
           "client_id": "HFGKFB$id"
         };
+        print("...............IS RUNNING............");
 
         apiCalling(
             context ,

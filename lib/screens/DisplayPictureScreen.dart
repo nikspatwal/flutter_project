@@ -26,7 +26,7 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
         Row(
           children: <Widget>[
             Container(padding: EdgeInsets.only(top: 20.0,bottom: 10.0,
-                left: 10.0,right: 10.0),
+                left: 30.0,right: 10.0),
 
               child: ButtonTheme(minWidth: 150.0,height: 40.0,
                 buttonColor: Colors.black,
