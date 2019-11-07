@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:vinnoba/keys/PrefKeys.dart';
 import 'package:vinnoba/screens/YesNo.dart';
 import 'package:vinnoba/utils/BasicUtils.dart';
-import 'package:vinnoba/utils/api_user_session.dart';
+import 'package:vinnoba/utils/api.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -137,7 +137,12 @@ class LoginPageState extends State<LoginPage> {
                               color: Colors.indigoAccent ,
                               elevation: 6.0 ,
                               onPressed:(){
-                                clickedOne();
+                                apiCalling(
+                                  context ,
+                                  userController.text.toString( ) ,
+                                  passwordController.text.toString( ) ,
+
+                                );
                                 flag?navigateTo():
                                     CircularProgressIndicator();
 
@@ -155,12 +160,13 @@ class LoginPageState extends State<LoginPage> {
 
 
   apiCalling(
-      BuildContext context ,String username ,String password ,Map map
-      ) async {
+      BuildContext context ,String username ,String password ) async {
+    String id = await BasicUtils.getDeviceId();
+    Map<String , String> map = {"client_id": id};
     String credentials = username + ":" + password;
     String auth = "Basic " + base64.encode( utf8.encode( credentials ) );
     print( "$map,$auth,$username,$password" );
-    Response response = await Provider.of<UserSession>( context )
+    Response response = await Provider.of<AllApi>( context )
         .login( auth ,map ,"application/json" , );
     Map headers = response.headers;
     print("HEADERS.............");
@@ -170,42 +176,28 @@ class LoginPageState extends State<LoginPage> {
     print(body.toString());
     flag =true;
     BasicUtils.savePreferences( PrefKeys.token ,headers['x-auth-token'] );
-    BasicUtils.savePreferences(PrefKeys.refreshToken, headers['refresh_token']);
+    BasicUtils.savePreferences(PrefKeys.refreshToken, headers['refresh-token']);
     BasicUtils.savePreferences( PrefKeys.username ,body['username'] );
     BasicUtils.savePreferences( PrefKeys.password ,headers['password'] );
-
-
-//    String token = await  BasicUtils.getPreferences( JsonKeys.token );
-
+    BasicUtils.savePreferences( PrefKeys.serverUniqueId ,headers['server_unique_id'] );
+    BasicUtils.savePreferences( PrefKeys.clientId ,id );
+    BasicUtils.savePreferences( PrefKeys.entityId ,body['entity_id'] );
   }
 
-  clickedOne() {
-    setState( (
-        ) {
-      print( "Hello" );
-      if(formKey.currentState.validate( )){
-        String id = BasicUtils.randomNum( )
-            .toString( );
-        Map<String , String> map = {
-          "client_id": "HFGKFB$id"
-        };
-        print("...............IS RUNNING............");
-
-        apiCalling(
-            context ,
-            userController.text.toString( ) ,
-            passwordController.text.toString( ) ,
-            map
-        );
-      }
-    } );
-  }
-  
   navigateTo(){
     Navigator.push(context,
       MaterialPageRoute(builder: (context) => YesNo()),
     );
     
+  }
+  refer() async{
+    String refreshToken = await BasicUtils.getPreferences(PrefKeys.refreshToken);
+    String clientId = await BasicUtils.getPreferences(PrefKeys.clientId);
+    String serverUniqueId = await BasicUtils.getPreferences(PrefKeys.serverUniqueId);
+    String userName = await BasicUtils.getPreferences(PrefKeys.username);
+    print(userName);
+
+    BasicUtils.refreshTokenApi(context, userName, clientId, refreshToken, serverUniqueId);
   }
 
 

@@ -18,6 +18,11 @@ class JsonKeys{
    static String address="address";
    static String city="city";
    static String pinCode="pincode";
+   static String serverUniqueId="server_unique_id";
+   static String clientId="client_id";
+   static String visitorId="visitor_id";
+   static String gateId="gate_id";
+   static String gateName="gate_name";
 
 
 

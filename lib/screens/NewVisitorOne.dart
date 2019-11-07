@@ -1,5 +1,14 @@
+import 'dart:convert';
+
+import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vinnoba/keys/JsonKeys.dart';
+import 'package:vinnoba/keys/PrefKeys.dart';
 import 'package:vinnoba/screens/FormPage.dart';
+import 'package:vinnoba/utils/BasicUtils.dart';
+import 'package:vinnoba/utils/api.dart';
+
 
 class NewVisitorOne extends StatefulWidget{
   @override
@@ -85,7 +94,12 @@ class NewVisitorOneState extends State<NewVisitorOne>{
 
                         child:Text("NEXT",style: TextStyle(color: Colors.white,
                         ),textScaleFactor: 1.2,) ,
-                        onPressed:()  => Navigator.push(context, MaterialPageRoute(builder: (context) =>  FormPage()))
+                        onPressed:() {
+                          String mobile = mobileNoController.text.toString();
+                          registerVisitorApi(context, mobile);
+                          Navigator.push(context,
+                                MaterialPageRoute(builder: (context) =>  FormPage()));
+                        }
                     ),
                   ),)
 
@@ -99,6 +113,24 @@ class NewVisitorOneState extends State<NewVisitorOne>{
 
 
     );
+
+  }
+  registerVisitorApi(
+      BuildContext context ,String mobile ) async {
+    Map mobileNo = {"mobile_no": mobile};
+    print(mobileNo);
+    String xToken = await BasicUtils.getPreferences(PrefKeys.token);
+    String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
+    print(entityId);
+    Response data = await Provider.of<AllApi>( context ).
+    registerVisitor(entityId, xToken, "application/json", "application/json", mobileNo);
+    Map headers = data.headers;
+    print(headers.toString());
+    Map body = json.decode( data.bodyString );
+    BasicUtils.savePreferences( JsonKeys.visitorId ,body['visitor_id']);
+    print("BODY...........");
+    print(body.toString());
+
 
   }
 

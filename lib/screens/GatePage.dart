@@ -1,5 +1,14 @@
+import 'dart:convert';
+
+import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vinnoba/keys/JsonKeys.dart';
+import 'package:vinnoba/keys/PrefKeys.dart';
 import 'package:vinnoba/screens/HomePage.dart';
+import 'package:vinnoba/utils/BasicUtils.dart';
+import 'package:vinnoba/utils/api.dart';
+
 
 class GatePage extends StatefulWidget{
   @override
@@ -13,7 +22,7 @@ class GatePageState extends State<GatePage>{
   TextEditingController mobileNoController = TextEditingController();
 
   static List<String> gates=["Select Value","Main Gate 1","Main Gate 2","Main Gate 3","Main Gate 4"];
-  var dropdownValue = gates[0];
+  String dropdownValue = gates[0];
 
 
 
@@ -94,7 +103,11 @@ class GatePageState extends State<GatePage>{
 
                           child:Text("NEXT",style: TextStyle(color: Colors.white,
                           ),textScaleFactor: 1.2,) ,
-                          onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()))
+                          onPressed:() {
+                            gateQueryApi( dropdownValue);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => HomePage()));
+                          }
                       ),
                     ),)
 
@@ -117,4 +130,28 @@ class GatePageState extends State<GatePage>{
     });
   }*/
 
+  gateQueryApi(dropdownValue) async {
+
+    Map body = {"gate_name": dropdownValue};
+    print(body);
+    String xToken = await BasicUtils.getPreferences(PrefKeys.token);
+    String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
+    print(entityId);
+    Response data = await Provider.of<AllApi>( context ).
+    gateQuery(xToken, entityId, body);
+    List response = json.decode( data.bodyString );
+    BasicUtils.savePreferences( JsonKeys.visitorId ,body['visitor_id']);
+    print("BODY...........");
+    print(response[0]['gate_id'].toString());
+    BasicUtils.savePreferences(JsonKeys.gateId, response[0]["gate_id"]);
+    save(response);
+  }
+
+
+  save(response){
+    for (int i=0; i<response.length;i++){
+      BasicUtils.savePreferences(JsonKeys.gateId, response[i]["gate_id"]);
+      BasicUtils.savePreferences(JsonKeys.gateName, response[i]["gate_name"]);
+    }
+  }
 }

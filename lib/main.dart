@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vinnoba/screens/GatePage.dart';
 import 'package:vinnoba/screens/LoginPage.dart';
-import 'utils/api_user_session.dart';
+import 'utils/api.dart';
 
 
 
@@ -13,8 +14,8 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return Provider(
-        builder: (_) => UserSession.create(),
-    dispose: (__, UserSession service) => service.client.dispose(),
+        builder: (_) => AllApi.create(),
+    dispose: (__, AllApi service) => service.client.dispose(),
     child:MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Vinnoba",
