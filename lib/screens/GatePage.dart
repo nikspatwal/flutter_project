@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:core' as prefix0;
+import 'dart:core';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +23,36 @@ class GatePageState extends State<GatePage>{
 
   TextEditingController mobileNoController = TextEditingController();
 
-  static List<String> gates=["Select Value","Main Gate 1","Main Gate 2","Main Gate 3","Main Gate 4"];
-  String dropdownValue = gates[0];
+  List<String> gates= List<String>();
+  String dropdownValue ;
+  List response=[];
+  int n=0;
 
+  gateQueryApi(dropdownValue) async {
 
+    Map body = {};
+    String xToken = await BasicUtils.getPreferences(PrefKeys.token);
+    String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
+    Response data = await Provider.of<AllApi>( context ).
+    gateQuery(xToken, entityId, body);
+     response = json.decode( data.bodyString );
+     n= response.length;
+     print(n);
+     print(response[0]['gate_name'].toString());
+
+    setState(() {
+      for(int i=0;i<n;i++){
+        gates.add(response[i]['gate_name'].toString());
+      }
+      dropdownValue=gates[0];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.gateQueryApi(dropdownValue);
+  }
 
 
   @override
@@ -34,7 +62,7 @@ class GatePageState extends State<GatePage>{
         appBar: AppBar( title: Text( "Manage Visitors" ) ,
           backgroundColor: Colors.lightBlueAccent , ) ,
         backgroundColor: Colors.white ,
-        body: SingleChildScrollView(
+        body:  SingleChildScrollView(
           child:  Column(
             children: <Widget>[
 
@@ -77,11 +105,10 @@ class GatePageState extends State<GatePage>{
                                   dropdownValue = newValue;
                                 });
                               },
-                              items: gates
-                                  .map<DropdownMenuItem<String>>((String value) {
+                              items: gates.map((item) {
                                 return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
+                                  value: item,
+                                  child: Text(item)
                                 );
                               }).toList(),
                             )
@@ -104,9 +131,9 @@ class GatePageState extends State<GatePage>{
                           child:Text("NEXT",style: TextStyle(color: Colors.white,
                           ),textScaleFactor: 1.2,) ,
                           onPressed:() {
-                            gateQueryApi( dropdownValue);
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => HomePage()));
+                            save( context,response,gates,dropdownValue,n);
+
+
                           }
                       ),
                     ),)
@@ -117,8 +144,6 @@ class GatePageState extends State<GatePage>{
             ],
           ),
         )
-
-
   );
 
 
@@ -130,28 +155,20 @@ class GatePageState extends State<GatePage>{
     });
   }*/
 
-  gateQueryApi(dropdownValue) async {
 
-    Map body = {"gate_name": dropdownValue};
-    print(body);
-    String xToken = await BasicUtils.getPreferences(PrefKeys.token);
-    String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
-    print(entityId);
-    Response data = await Provider.of<AllApi>( context ).
-    gateQuery(xToken, entityId, body);
-    List response = json.decode( data.bodyString );
-    BasicUtils.savePreferences( JsonKeys.visitorId ,body['visitor_id']);
-    print("BODY...........");
-    print(response[0]['gate_id'].toString());
-    BasicUtils.savePreferences(JsonKeys.gateId, response[0]["gate_id"]);
-    save(response);
   }
 
 
-  save(response){
-    for (int i=0; i<response.length;i++){
-      BasicUtils.savePreferences(JsonKeys.gateId, response[i]["gate_id"]);
-      BasicUtils.savePreferences(JsonKeys.gateName, response[i]["gate_name"]);
+  save(BuildContext context,response,gates,dropdownValue,n){
+    int pos=0;
+    for (int i=0; i<n;i++){
+      if(dropdownValue==gates[i]){
+        pos=i;
+        break;
+      }
     }
+    BasicUtils.savePreferences(JsonKeys.gateId, response[pos]["gate_id"]);
+    BasicUtils.savePreferences(JsonKeys.gateName, response[pos]["gate_name"]);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => HomePage()));
   }
-}

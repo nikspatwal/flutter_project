@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vinnoba/screens/GatePage.dart';
-import 'package:vinnoba/screens/HomePage.dart';
 import 'package:vinnoba/screens/SeconeHomePage.dart';
 
 class YesNo extends StatefulWidget{

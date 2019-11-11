@@ -137,14 +137,12 @@ class LoginPageState extends State<LoginPage> {
                               color: Colors.indigoAccent ,
                               elevation: 6.0 ,
                               onPressed:(){
-                                apiCalling(
+                                loginApi(
                                   context ,
                                   userController.text.toString( ) ,
                                   passwordController.text.toString( ) ,
-
                                 );
-                                flag?navigateTo():
-                                    CircularProgressIndicator();
+
 
                               })
                         ) ,
@@ -159,7 +157,7 @@ class LoginPageState extends State<LoginPage> {
     );}
 
 
-  apiCalling(
+  loginApi(
       BuildContext context ,String username ,String password ) async {
     String id = await BasicUtils.getDeviceId();
     Map<String , String> map = {"client_id": id};
@@ -169,10 +167,10 @@ class LoginPageState extends State<LoginPage> {
     Response response = await Provider.of<AllApi>( context )
         .login( auth ,map ,"application/json" , );
     Map headers = response.headers;
-    print("HEADERS.............");
+
     print(headers.toString());
     Map body = json.decode( response.bodyString );
-    print("BODY...........");
+
     print(body.toString());
     flag =true;
     BasicUtils.savePreferences( PrefKeys.token ,headers['x-auth-token'] );
@@ -182,15 +180,20 @@ class LoginPageState extends State<LoginPage> {
     BasicUtils.savePreferences( PrefKeys.serverUniqueId ,headers['server_unique_id'] );
     BasicUtils.savePreferences( PrefKeys.clientId ,id );
     BasicUtils.savePreferences( PrefKeys.entityId ,body['entity_id'] );
+
+    if (response.statusCode==200){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => YesNo()));
+    }
+    else{
+      return Center(child: CircularProgressIndicator());
+    }
   }
 
-  navigateTo(){
-    Navigator.push(context,
-      MaterialPageRoute(builder: (context) => YesNo()),
-    );
+
     
   }
-  refer() async{
+/*  refer() async{
     String refreshToken = await BasicUtils.getPreferences(PrefKeys.refreshToken);
     String clientId = await BasicUtils.getPreferences(PrefKeys.clientId);
     String serverUniqueId = await BasicUtils.getPreferences(PrefKeys.serverUniqueId);
@@ -198,10 +201,10 @@ class LoginPageState extends State<LoginPage> {
     print(userName);
 
     BasicUtils.refreshTokenApi(context, userName, clientId, refreshToken, serverUniqueId);
-  }
+  }*/
 
 
-}
+
 
 
 

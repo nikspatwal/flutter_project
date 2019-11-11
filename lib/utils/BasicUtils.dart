@@ -13,66 +13,53 @@ import 'dart:math';
 
 import 'package:vinnoba/utils/api.dart';
 
-
-class BasicUtils{
-
-
-
-  static Future<String> getPreferences( String key) async  {
+class BasicUtils {
+  static Future<String> getPreferences(String key) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String value =  pref.getString(key);
+    String value = pref.getString(key);
     return value;
   }
 
-  static void savePreferences( String key,String value) async  {
+  static void savePreferences(String key, String value) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString(key, value);
   }
 
- static int randomNum() {
+  static int randomNum() {
     var rng = new Random();
     int d = rng.nextInt(100);
     return d;
   }
 
-  static void refreshTokenApi(BuildContext context,String userName,
-       String clientId, String refreshToken, String serverUniqueId) async {
-    Map<String,String> refreshTokenMap = {
+  static void refreshTokenApi(BuildContext context, String userName,
+      String clientId, String refreshToken, String serverUniqueId) async {
+    Map<String, String> refreshTokenMap = {
       "user_name": userName,
       "client_id": clientId,
-       "server_unique_id": serverUniqueId,
+      "server_unique_id": serverUniqueId,
     };
 
     print(userName);
-    Response data = await Provider.of<AllApi>
-      (context).refreshToken(refreshToken, "application/json", "application/json", refreshTokenMap);
+    Response data = await Provider.of<AllApi>(context).refreshToken(
+        refreshToken, "application/json", "application/json", refreshTokenMap);
 
     Map header = data.headers;
     Map body = json.decode(data.bodyString);
     print("HERE IT COMES>>>>>>>");
     print(header.toString());
     print(body.toString());
-
-
   }
-
 
   static Future<String> getDeviceId() async {
     String deviceId;
     final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
-
-      if (Platform.isAndroid) {
-        var build = await deviceInfoPlugin.androidInfo;
-        deviceId = build.androidId;  //UUID for Android
-      } else if (Platform.isIOS) {
-        var data = await deviceInfoPlugin.iosInfo;
-        deviceId = data.identifierForVendor;  //UUID for iOS
-      }
-
-
-//if (!mounted) return;
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo build = await deviceInfoPlugin.androidInfo;
+      deviceId = build.androidId; //UUID for Android
+    } else if (Platform.isIOS) {
+      IosDeviceInfo data = await deviceInfoPlugin.iosInfo;
+      deviceId = data.identifierForVendor; //UUID for iOS
+    }
     return deviceId;
   }
-
-
 }
