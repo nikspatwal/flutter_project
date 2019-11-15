@@ -14,6 +14,7 @@ class CameraCaptureTwo extends StatefulWidget {
 class CameraCaptureTwoState extends State<CameraCaptureTwo> {
   CameraController camController;
   Future<void> initializeControllerFuture;
+  int selectCamIdx;
 
   @override
   void initState() {
@@ -44,12 +45,13 @@ class CameraCaptureTwoState extends State<CameraCaptureTwo> {
         appBar: AppBar(
           title: Text("Say CHEESE!!..."),
         ),
-        body: FutureBuilder<void>(
+        body:  FutureBuilder<void>(
             future: initializeControllerFuture,
             builder: (context, snapshot) {
               print(snapshot);
               print('The string is    ${snapshot.connectionState}');
               if (snapshot.connectionState == ConnectionState.done)  {
+                AspectRatio(aspectRatio: camController.value.aspectRatio);
                 return  CameraPreview(camController);
               } else {
                 return Center(
@@ -57,6 +59,7 @@ class CameraCaptureTwoState extends State<CameraCaptureTwo> {
                 );
               }
             }),
+        
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.camera_alt),
             onPressed: () async {

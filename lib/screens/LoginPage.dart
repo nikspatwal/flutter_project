@@ -137,13 +137,8 @@ class LoginPageState extends State<LoginPage> {
                               color: Colors.indigoAccent ,
                               elevation: 6.0 ,
                               onPressed:(){
-                                loginApi(
-                                  context ,
-                                  userController.text.toString( ) ,
-                                  passwordController.text.toString( ) ,
-                                );
-
-
+                                getId(context,userController.text.toString(),
+                                passwordController.text.toString());
                               })
                         ) ,
 
@@ -157,6 +152,7 @@ class LoginPageState extends State<LoginPage> {
     );}
 
 
+/*
   loginApi(
       BuildContext context ,String username ,String password ) async {
     String id = await BasicUtils.getDeviceId();
@@ -189,19 +185,56 @@ class LoginPageState extends State<LoginPage> {
       return Center(child: CircularProgressIndicator());
     }
   }
+*/
 
 
-    
+  FutureBuilder<Response> buildBody
+      (BuildContext context,String username ,String password, String id ) {
+
+    Map<String , String> map = {"client_id": id};
+    String credentials = username + ":" + password;
+    String auth = "Basic " + base64.encode( utf8.encode( credentials ) );
+    print( "$map,$auth,$username,$password" );
+
+    return FutureBuilder<Response>(
+      future: Provider.of<AllApi>( context ).login(auth ,map ,"application/json" ),
+      builder: (context ,snapshot){
+        print( "$map,$auth,$username,$password" );
+        if (snapshot.connectionState == ConnectionState.done){
+          Map headers = snapshot.data.headers;
+          print(headers.toString());
+          Map body = json.decode( snapshot.data.bodyString );
+          print(body.toString());
+          BasicUtils.savePreferences( PrefKeys.token ,headers['x-auth-token'] );
+          BasicUtils.savePreferences(PrefKeys.refreshToken, headers['refresh-token']);
+          BasicUtils.savePreferences( PrefKeys.username ,body['username'] );
+          BasicUtils.savePreferences( PrefKeys.password ,headers['password'] );
+          BasicUtils.savePreferences( PrefKeys.serverUniqueId ,headers['server_unique_id'] );
+          BasicUtils.savePreferences( PrefKeys.clientId ,id );
+          BasicUtils.savePreferences( PrefKeys.entityId ,body['entity_id'] );
+          return navigateTo();
+
+        }
+        else{
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      } ,
+    );}
+
+  navigateTo(){
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => YesNo()));
   }
-/*  refer() async{
-    String refreshToken = await BasicUtils.getPreferences(PrefKeys.refreshToken);
-    String clientId = await BasicUtils.getPreferences(PrefKeys.clientId);
-    String serverUniqueId = await BasicUtils.getPreferences(PrefKeys.serverUniqueId);
-    String userName = await BasicUtils.getPreferences(PrefKeys.username);
-    print(userName);
 
-    BasicUtils.refreshTokenApi(context, userName, clientId, refreshToken, serverUniqueId);
-  }*/
+  getId(BuildContext context, String username,String password)async{
+    String id= await BasicUtils.getDeviceId();
+    print("GET ID.............$id");
+    buildBody(context , username , password , id);
+  }
+
+}
 
 
 

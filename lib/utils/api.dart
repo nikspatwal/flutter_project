@@ -1,6 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:chopper/chopper.dart' as prefix0;
-
 part 'api.chopper.dart';
 
 @ChopperApi(baseUrl: "")
