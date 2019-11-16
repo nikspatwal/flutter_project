@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:vinnoba/screens/CameraCaptureTwo.dart';
+
+import 'Camtry.dart';
 class FormPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState(
@@ -247,7 +249,7 @@ class FormPageState extends State<FormPage> with SingleTickerProviderStateMixin{
 
                   child:Text("CAPTURE",style: TextStyle(color: Colors.white,
                   ),textScaleFactor: 1.2,) ,
-                  onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) => CameraCaptureTwo()))
+                  onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) => CamTry()))
               ),
 
     );

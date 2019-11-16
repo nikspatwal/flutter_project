@@ -188,9 +188,8 @@ class LoginPageState extends State<LoginPage> {
 */
 
 
-  FutureBuilder<Response> buildBody
-      (BuildContext context,String username ,String password, String id ) {
-
+  FutureBuilder<Response> buildBody(BuildContext context,
+      String username,String password, String id ) {
     Map<String , String> map = {"client_id": id};
     String credentials = username + ":" + password;
     String auth = "Basic " + base64.encode( utf8.encode( credentials ) );
@@ -201,10 +200,12 @@ class LoginPageState extends State<LoginPage> {
       builder: (context ,snapshot){
         print( "$map,$auth,$username,$password" );
         if (snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            print("fdgdrgreg");
+          }
           Map headers = snapshot.data.headers;
-          print(headers.toString());
           Map body = json.decode( snapshot.data.bodyString );
-          print(body.toString());
+          print(body);
           BasicUtils.savePreferences( PrefKeys.token ,headers['x-auth-token'] );
           BasicUtils.savePreferences(PrefKeys.refreshToken, headers['refresh-token']);
           BasicUtils.savePreferences( PrefKeys.username ,body['username'] );
@@ -213,7 +214,6 @@ class LoginPageState extends State<LoginPage> {
           BasicUtils.savePreferences( PrefKeys.clientId ,id );
           BasicUtils.savePreferences( PrefKeys.entityId ,body['entity_id'] );
           return navigateTo();
-
         }
         else{
           return Center(
