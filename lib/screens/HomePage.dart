@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vinnoba/screens/NewVisitorOne.dart';
+import 'package:vinnoba/screens/Visitors.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -58,7 +59,7 @@ class HomePageState extends State<HomePage> {
                     color: Colors.lightBlueAccent,
                     child:Text("VISITORS",style: TextStyle(color: Colors.white, )
                       ,textScaleFactor: 1.3,) ,
-                    onPressed:(){}),
+                    onPressed:()=> Navigator.push(context, MaterialPageRoute(builder: (context) => Visitors()))),
               ),
 
               Container(

@@ -59,4 +59,15 @@ class _$AllApi extends AllApi {
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
+
+  Future<Response> visitorHistory(String entityId, String xToken, String content,String accept,Map body) {
+    final $url = '/api/entity/$entityId/visitorhistory/query';
+    final $headers = {'x-auth-token': xToken,
+      'Content-Type': content,
+      'Accept': accept};
+    final $body = body;
+    final $request =
+    Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

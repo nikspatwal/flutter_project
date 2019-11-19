@@ -137,7 +137,7 @@ class LoginPageState extends State<LoginPage> {
                               color: Colors.indigoAccent ,
                               elevation: 6.0 ,
                               onPressed:(){
-                                getId(context,userController.text.toString(),
+                                loginApi(context,userController.text.toString(),
                                 passwordController.text.toString());
                               })
                         ) ,
@@ -152,7 +152,7 @@ class LoginPageState extends State<LoginPage> {
     );}
 
 
-/*
+
   loginApi(
       BuildContext context ,String username ,String password ) async {
     String id = await BasicUtils.getDeviceId();
@@ -185,8 +185,7 @@ class LoginPageState extends State<LoginPage> {
       return Center(child: CircularProgressIndicator());
     }
   }
-*/
-
+/*
 
   FutureBuilder<Response> buildBody(BuildContext context,
       String username,String password, String id ) {
@@ -232,7 +231,7 @@ class LoginPageState extends State<LoginPage> {
     String id= await BasicUtils.getDeviceId();
     print("GET ID.............$id");
     buildBody(context , username , password , id);
-  }
+  }*/
 
 }
 

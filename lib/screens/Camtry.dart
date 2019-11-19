@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class CamTry extends StatefulWidget {
   @override
@@ -19,8 +21,14 @@ class CamTryState extends State<CamTry>{
 
   Future getCam() async{
     var pic = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
+    setState(() async{
       image = pic;
+      final imagePath = join(( await getTemporaryDirectory()).path,
+      '${DateTime.now()}.png');
+
+
+      print(imagePath);
+
     });
   }
 
