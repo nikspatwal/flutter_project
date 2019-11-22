@@ -1,4 +1,5 @@
 import 'package:chopper/chopper.dart';
+import 'package:chopper/chopper.dart' as prefix0;
 part 'api.chopper.dart';
 
 @ChopperApi(baseUrl: "")
@@ -41,6 +42,14 @@ abstract class AllApi extends ChopperService {
       @Header( "Content-Type" ) String content ,
       @Header( "Accept" ) String accept ,
       @body Map body
+      );
+
+  @Get(path:"/api/entity/{entityId}/visitor/{visitorId}/visitorhistory/{visitorhistoryId}/image/")
+  Future<Response> getVisitorImage(
+      @Path('entityId') String entityId,
+      @Path('visitorId') String visitorId,
+      @Path('visitorhistoryId') String visitorHistoryId,
+      @Header( "x-auth-token" ) String xToken
       );
 
   static AllApi create(){

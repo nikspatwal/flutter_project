@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +15,9 @@ class Visitors extends StatefulWidget{
 }
 
 class VisitorsState extends State<Visitors>{
+  List visitor;
+  String visitorId;
+  String visitorHistoryId;
   visitorHistoryApi() async{
     String xToken = await BasicUtils.getPreferences(PrefKeys.token);
     String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
@@ -25,9 +27,26 @@ class VisitorsState extends State<Visitors>{
 
     setState(() {
       Map data= json.decode(response.bodyString);
-      print(data.toString());
-      List visitor= data['data'];
-      print(visitor);
+      print("HERE COMES THE DATA>>>>>>>>>>>");
+      visitor= data['data'];
+      visitorId = data['data'][0]['visitor_id'];
+      visitorHistoryId = data['data'][0]['visitor_history_id'];
+      print(" VISITOR ID IS $visitorId ");
+      print(" VISITOR  HISTORY ID IS $visitorHistoryId ");
+    });
+  }
+
+
+   visitorImageApi() async{
+    String xToken = await BasicUtils.getPreferences(PrefKeys.token);
+    String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
+    print("HIT IT");
+    Response response = await Provider.of<AllApi>(context)
+        .getVisitorImage(entityId, visitorId, visitorHistoryId, xToken);
+
+    setState(() {
+      Map  body= json.decode(response.toString());
+      print(body);
     });
   }
 
@@ -35,6 +54,7 @@ class VisitorsState extends State<Visitors>{
   void initState() {
     super.initState();
     this.visitorHistoryApi();
+    this.visitorImageApi();
   }
 
 
@@ -42,13 +62,17 @@ class VisitorsState extends State<Visitors>{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("Visitor History"),),
-      body: Center(
-
-      ),
+      body: ListView.builder(
+        itemCount: visitor==null? 0 : visitor.length,
+          itemBuilder: (BuildContext context,i){
+          return Card(child: ListTile(
+            title: Text("${visitor[i]['first_name']}  ${visitor[i]['last_name']}"),
+          subtitle: Text(" Mobile no: ${visitor[i]['mobile_no']}"),
+          ));
+          })
     );
   }
 
