@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:chopper/chopper.dart';
+import 'package:chopper/chopper.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vinnoba/keys/PrefKeys.dart';
@@ -41,11 +42,12 @@ class VisitorsState extends State<Visitors>{
     String xToken = await BasicUtils.getPreferences(PrefKeys.token);
     String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
     print("HIT IT");
-    Response response = await Provider.of<AllApi>(context)
-        .getVisitorImage(entityId, visitorId, visitorHistoryId, xToken);
+    Multipart response = (await Provider.of<AllApi>(context)
+        .getVisitorImage(entityId, visitorId, visitorHistoryId, xToken)) as Multipart;
 
     setState(() {
       Map  body= json.decode(response.toString());
+      print(" THE IMAGE DATA IS    ");
       print(body);
     });
   }

@@ -45,7 +45,8 @@ abstract class AllApi extends ChopperService {
       );
 
   @Get(path:"/api/entity/{entityId}/visitor/{visitorId}/visitorhistory/{visitorhistoryId}/image/")
-  Future<Response> getVisitorImage(
+  @Multipart()
+  Future<Multipart> getVisitorImage(
       @Path('entityId') String entityId,
       @Path('visitorId') String visitorId,
       @Path('visitorhistoryId') String visitorHistoryId,
