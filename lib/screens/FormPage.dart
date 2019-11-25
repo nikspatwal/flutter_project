@@ -1,7 +1,6 @@
+/*
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:vinnoba/screens/CameraCaptureTwo.dart';
-
 import 'Camtry.dart';
 class FormPage extends StatefulWidget {
   @override
@@ -14,6 +13,7 @@ class FormPage extends StatefulWidget {
 class FormPageState extends State<FormPage> with SingleTickerProviderStateMixin{
   TextEditingController nameController = TextEditingController();
   int radioValue=0;
+  List<DynamicWidget> listDynamic =[];
 
   final List<Tab> myTabs = <Tab>[
     new Tab(text: 'Basic'),
@@ -51,22 +51,13 @@ class FormPageState extends State<FormPage> with SingleTickerProviderStateMixin{
     return Scaffold(
       appBar: AppBar( title: Text( "Manage Visitors" ) ,
         backgroundColor: Colors.lightBlueAccent ,
-        bottom: TabBar(
-          controller: tabController,
-          tabs: myTabs,
-          onTap: (index){
-            setState(() {
-              tabController.index = 0;
-            });
-          })
         ) ,
         backgroundColor: Colors.white ,
-      body:TabBarView(
-        controller: tabController,
-        physics: NeverScrollableScrollPhysics(),
+      body:ListView(
           children: [
             first(),
-            cameraCaptureOne()
+
+
           ]),
 
 
@@ -74,7 +65,7 @@ class FormPageState extends State<FormPage> with SingleTickerProviderStateMixin{
   }
 
   first(){
-    return SingleChildScrollView(child:
+    return Flexible(child:
       Column( children: <Widget>[
         Padding(padding: EdgeInsets.only(top: 20.0,bottom: 10.0),
           child: TextFormField(
@@ -220,7 +211,9 @@ class FormPageState extends State<FormPage> with SingleTickerProviderStateMixin{
                   child:Text("NEXT",style: TextStyle(color: Colors.white,
                   ),textScaleFactor: 1.2,) ,
                   onPressed:() => tabController.animateTo((tabController.index + 1) % 2)
-                /*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*/
+                */
+/*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*//*
+
               ),
             ))
 
@@ -239,11 +232,13 @@ class FormPageState extends State<FormPage> with SingleTickerProviderStateMixin{
             height: 40.0,
             width: 70.0,
             padding: EdgeInsets.all(10.0),
-            child: /*ButtonTheme(
+            child: */
+/*ButtonTheme(
               buttonColor: Colors.black,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0)),
-              child: */RaisedButton(
+              child: *//*
+RaisedButton(
                   elevation:2.0,
                   color: Colors.black,
 
@@ -256,5 +251,26 @@ class FormPageState extends State<FormPage> with SingleTickerProviderStateMixin{
   }
 }
 
+class DynamicWidget extends StatelessWidget{
+  TextEditingController textController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      child: TextField(
+        controller: textController,
+        decoration: InputDecoration(
+          hintText: "",
+        ),
+      ),
+    );
+  }
+}
 
 
+
+
+
+
+*/

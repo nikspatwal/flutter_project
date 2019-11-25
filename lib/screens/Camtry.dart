@@ -6,16 +6,24 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CamTry extends StatefulWidget {
+   final Map jsonData;
+
+   CamTry({Key key, this.jsonData}) : super(key: key);
+
   @override
   State<StatefulWidget> createState(
       ) {
-    return CamTryState();
+    return CamTryState(jsonData);
   }
 }
 
 class CamTryState extends State<CamTry>{
+  List addFields;
+  Map jsonData;
+  CamTryState(this.jsonData);
   TextEditingController nameController= TextEditingController();
   int radioValue=0;
+  List<DynamicWidget> dynamicList = [];
 
   File image;
 
@@ -32,16 +40,39 @@ class CamTryState extends State<CamTry>{
     });
   }
 
+  run(){
+    print("NEXT PAGE VALA OUTPUT");
+    print(jsonData['additional_fields']);
+    addFields = jsonData['additional_fields'];
+    int n = addFields.length;
+    for(int i=0; i<n;i++){
+      if (addFields[i]['type']=='TEXT'){
+
+      }
+    }
+
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.run();
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return Scaffold(
       appBar: AppBar( title: Text( "Manage Visitors" ) ,
           backgroundColor: Colors.lightBlueAccent ,) ,
-      body: first()
-    );
+      body: ListView(children: <Widget>[
+        first(),
+
+      ],
+    ));
   }
 
   first(){
@@ -208,5 +239,23 @@ class CamTryState extends State<CamTry>{
 
 }
 
+
+
+class DynamicWidget extends StatelessWidget{
+  TextEditingController textController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      child: TextField(
+        controller: textController,
+        decoration: InputDecoration(
+          hintText: "",
+        ),
+      ),
+    );
+  }
+}
 
 

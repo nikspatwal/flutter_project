@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vinnoba/keys/JsonKeys.dart';
 import 'package:vinnoba/keys/PrefKeys.dart';
-import 'package:vinnoba/screens/FormPage.dart';
+import 'package:vinnoba/screens/Camtry.dart';
 import 'package:vinnoba/utils/BasicUtils.dart';
 import 'package:vinnoba/utils/api.dart';
 
@@ -19,6 +20,7 @@ class NewVisitorOne extends StatefulWidget{
 
 class NewVisitorOneState extends State<NewVisitorOne>{
   TextEditingController mobileNoController = TextEditingController();
+  Map body;
   @override
   Widget build(BuildContext context) {
 
@@ -97,8 +99,7 @@ class NewVisitorOneState extends State<NewVisitorOne>{
                         onPressed:() {
                           String mobile = mobileNoController.text.toString();
                           registerVisitorApi(context, mobile);
-                          Navigator.push(context,
-                                MaterialPageRoute(builder: (context) =>  FormPage()));
+
                         }
                     ),
                   ),)
@@ -126,10 +127,13 @@ class NewVisitorOneState extends State<NewVisitorOne>{
     registerVisitor(entityId, xToken, "application/json", "application/json", mobileNo);
     Map headers = data.headers;
     print(headers.toString());
-    Map body = json.decode( data.bodyString );
+     body = json.decode( data.bodyString );
     BasicUtils.savePreferences( JsonKeys.visitorId ,body['visitor_id']);
     print("BODY...........");
     print(body.toString());
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) =>
+            CamTry(jsonData: body)));
 
 
   }
