@@ -18,6 +18,9 @@ class CamTry extends StatefulWidget {
 }
 
 class CamTryState extends State<CamTry>{
+  String jsonKey;
+  String displayKey;
+  String keypad;
   List addFields;
   Map jsonData;
   CamTryState(this.jsonData);
@@ -40,6 +43,13 @@ class CamTryState extends State<CamTry>{
     });
   }
 
+  impText(int i){
+    jsonKey = addFields[i]['json_key'];
+    displayKey = addFields[i]['display_key'];
+    keypad = addFields[i]['rule'];
+    dynamicList.add(DynamicWidget());
+  }
+
   run(){
     print("NEXT PAGE VALA OUTPUT");
     print(jsonData['additional_fields']);
@@ -47,20 +57,17 @@ class CamTryState extends State<CamTry>{
     int n = addFields.length;
     for(int i=0; i<n;i++){
       if (addFields[i]['type']=='TEXT'){
-
+        impText(i);
       }
     }
-
-
   }
+
 
   @override
   void initState() {
     super.initState();
     this.run();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -230,18 +237,19 @@ class CamTryState extends State<CamTry>{
 
     ]
     ));
-
-
-
-
   }
-
-
 }
 
+class DynamicWidget extends StatefulWidget{
 
+  @override
+  State<StatefulWidget> createState() {
 
-class DynamicWidget extends StatelessWidget{
+    return DynamicWidgetState();
+  }
+}
+
+class DynamicWidgetState extends State<DynamicWidget> {
   TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -251,11 +259,13 @@ class DynamicWidget extends StatelessWidget{
       child: TextField(
         controller: textController,
         decoration: InputDecoration(
-          hintText: "",
+          hintText: CamTryState.displayKey,
         ),
       ),
     );
   }
+
 }
+
 
 
