@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:vinnoba/keys/JsonKeys.dart';
 import 'package:vinnoba/keys/PrefKeys.dart';
 import 'package:vinnoba/screens/Camtry.dart';
+import 'package:vinnoba/screens/Test.dart';
 import 'package:vinnoba/utils/BasicUtils.dart';
 import 'package:vinnoba/utils/api.dart';
 
@@ -133,7 +134,7 @@ class NewVisitorOneState extends State<NewVisitorOne>{
     print(body.toString());
     Navigator.push(context,
         MaterialPageRoute(builder: (context) =>
-            CamTry(jsonData: body)));
+            Test(jsonData: body)));
 
 
   }

@@ -4,25 +4,25 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-class CamTry extends StatefulWidget {
-   final Map jsonData;
+class Test extends StatefulWidget {
+  final Map jsonData;
 
-   CamTry({Key key, this.jsonData}) : super(key: key);
+  Test({Key key, this.jsonData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState(
       ) {
-    return CamTryState(jsonData);
+    return TestState(jsonData);
   }
 }
 
-class CamTryState extends State<CamTry>{
+class TestState extends State<Test>{
   String jsonKey;
   String displayKey;
   String keypad;
   List addFields;
   Map jsonData;
-  CamTryState(this.jsonData);
+  TestState(this.jsonData);
   TextEditingController nameController= TextEditingController();
   int radioValue=0;
   List<DynamicWidget> dynamicList = [];
@@ -34,7 +34,7 @@ class CamTryState extends State<CamTry>{
     setState(() async{
       image = pic;
       final imagePath = join(( await getTemporaryDirectory()).path,
-      '${DateTime.now()}.png');
+          '${DateTime.now()}.png');
 
 
       print(imagePath);
@@ -72,25 +72,43 @@ class CamTryState extends State<CamTry>{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar( title: Text( "Manage Visitors" ) ,
+        appBar: AppBar( title: Text( "Manage Visitors" ) ,
           backgroundColor: Colors.lightBlueAccent ,) ,
-      body: ListView(children: <Widget>[
-        first(),
+        body: Column(children: <Widget>[
+          Flexible(flex: 2,
+            child: first(), ),
+          
+          Flexible(flex: 2,
+              child: ListView.builder(
+                itemCount: dynamicList.length,
+                itemBuilder: (_, index) => dynamicList[index],
+              ),
+          ),
 
+          Container(alignment: Alignment.bottomCenter,
 
-      ],
-    ));
+              padding: EdgeInsets.all(10.0),
+              child: ButtonTheme(
+                minWidth: 300.0,height: 50.0,
+                buttonColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                child: RaisedButton(
+                    elevation:2.0,
+                    color: Colors.black,
+
+                    child:Text("NEXT",style: TextStyle(color: Colors.white,
+                    ),textScaleFactor: 1.2,) ,
+                    onPressed:() => getCam()
+                  /*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*/
+                ),
+              ))
+        ],
+        ));
 
 
   }
 
-/*  Widget dynamicTextField = new Flexible(
-    flex: 2,
-    child: new ListView.builder(
-      itemCount: dynamicList.length,
-      itemBuilder: (_, index) => listDynamic[index],
-    ),
-  );*/
 
   first(){
 
@@ -225,7 +243,7 @@ class CamTryState extends State<CamTry>{
         height: 300.0,
       ),
 
-      Container(alignment: Alignment.bottomCenter,
+     /* Container(alignment: Alignment.bottomCenter,
 
           padding: EdgeInsets.all(10.0),
           child: ButtonTheme(
@@ -240,9 +258,9 @@ class CamTryState extends State<CamTry>{
                 child:Text("NEXT",style: TextStyle(color: Colors.white,
                 ),textScaleFactor: 1.2,) ,
                 onPressed:() => getCam()
-              /*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*/
+              *//*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*//*
             ),
-          ))
+          ))*/
 
 
     ]
@@ -261,7 +279,7 @@ class DynamicWidget extends StatelessWidget{
 }
 
 class DynamicWidgetState extends State<DynamicWidget> {*/
-  TextEditingController textController = TextEditingController();
+   TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -270,7 +288,7 @@ class DynamicWidgetState extends State<DynamicWidget> {*/
       child: TextField(
         controller: textController,
         decoration: InputDecoration(
-          hintText: " ",
+          hintText: " Enter Data ",
         ),
       ),
     );

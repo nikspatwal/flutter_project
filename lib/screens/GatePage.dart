@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:core' as prefix0;
 import 'dart:core';
 
 import 'package:chopper/chopper.dart';
