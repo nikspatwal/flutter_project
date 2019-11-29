@@ -1,61 +1,65 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-class Test extends StatefulWidget {
+class Test3 extends StatefulWidget {
   final Map jsonData;
 
-  Test({Key key, this.jsonData}) : super(key: key);
+  Test3({Key key, this.jsonData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState(
       ) {
-    return TestState(jsonData);
+    return Test3State(jsonData);
   }
 }
 
-class TestState extends State<Test>{
+class Test3State extends State<Test3> {
   String jsonKey;
   String displayKey;
   String keypad;
   List addFields;
   Map jsonData;
-  TestState(this.jsonData);
-  TextEditingController nameController= TextEditingController();
-  int radioValue=0;
-  List<DynamicWidget> dynamicList = [];
+
+  Test3State(this.jsonData);
+
+  TextEditingController nameController = TextEditingController();
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  int radioValue = 0;
+  List<TextFieldWidget> dynamicList = [];
 
   File image;
 
-  Future getCam() async{
+  Future getCam() async {
     var pic = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() async{
+    setState(() async {
       image = pic;
-      final imagePath = join(( await getTemporaryDirectory()).path,
+      final imagePath = join((await getTemporaryDirectory()).path,
           '${DateTime.now()}.png');
 
 
       print(imagePath);
-
     });
   }
 
-  impText(int i){
+  impText(int i) {
     jsonKey = addFields[i]['json_key'];
     displayKey = addFields[i]['display_key'];
     keypad = addFields[i]['rule'];
-    dynamicList.add(DynamicWidget());
+    dynamicList.add(TextFieldWidget());
   }
 
-  run(){
+  run() {
     print("NEXT PAGE VALA OUTPUT");
     print(jsonData['additional_fields']);
     addFields = jsonData['additional_fields'];
     int n = addFields.length;
-    for(int i=0; i<n;i++){
-      if (addFields[i]['type']=='TEXT'){
+    for (int i = 0; i < n; i++) {
+      if (addFields[i]['type'] == 'TEXT') {
         impText(i);
       }
     }
@@ -70,49 +74,62 @@ class TestState extends State<Test>{
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        appBar: AppBar( title: Text( "Manage Visitors" ) ,
-          backgroundColor: Colors.lightBlueAccent ,) ,
+        appBar: AppBar(title: Text("Manage Visitors"),
+          backgroundColor: Colors.lightBlueAccent,),
         body: Column(children: <Widget>[
-           first(),
-          
-          Flexible(
-              child: ListView.builder(
-                itemCount: dynamicList.length,
-                itemBuilder: (_, index) => dynamicList[index],
+          FormBuilder(
+            key: formKey,
+            child: Column(
+              children: <Widget>[
+              FormBuilderTextField(
+                keyboardType: TextInputType.text,
+                controller: nameController,
+                  attribute: "Age",
+                  decoration: InputDecoration(labelText: "Age"),
+                  validators: [
+                    FormBuilderValidators.requiredTrue(errorText: "Required"),
+                  ]
               ),
-          ),
+               /* FormBuilderCheckboxList(
+                  decoration:
+                  InputDecoration(labelText: "The language of my people"),
+                  attribute: "languages",
+                  initialValue: ["Dart"],
+                  options: [
+                    FormBuilderFieldOption(value: "Dart"),
+                    FormBuilderFieldOption(value: "Kotlin"),
+                    FormBuilderFieldOption(value: "Java"),
+                    FormBuilderFieldOption(value: "Swift"),
+                    FormBuilderFieldOption(value: "Objective-C"),
+                  ],
+                )*/
+                FormBuilderRadio(
+                  decoration: InputDecoration(labelText: "Gender"),
+                  attribute: "Gender kya h",
+                  initialValue: ["Male"],
+                  options: [
+                    FormBuilderFieldOption(value: "Male",
+                    child: Image.asset('assets/images/male.png',),),
+                    FormBuilderFieldOption(value: "Female",child: Image.asset('assets/images/femalecropped.png',),),
+                    FormBuilderFieldOption(value: "Transgender",child: Image.asset('assets/images/other.png',),)
+                  ],
+                )
 
-          Container(alignment: Alignment.bottomCenter,
+               /* ListView.builder(itemCount: dynamicList.length,
+                  itemBuilder: (_, index) => dynamicList[index],)*/
+              ],
+            ),
 
-              padding: EdgeInsets.all(10.0),
-              child: ButtonTheme(
-                minWidth: 300.0,height: 50.0,
-                buttonColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0)),
-                child: RaisedButton(
-                    elevation:2.0,
-                    color: Colors.black,
-
-                    child:Text("NEXT",style: TextStyle(color: Colors.white,
-                    ),textScaleFactor: 1.2,) ,
-                    onPressed:() => getCam()
-                  /*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*/
-                ),
-              ))
-        ],
-        ));
-
-
+          )
+        ]));
   }
+}
 
-
+/*
   first(){
 
-    return SingleChildScrollView(
-        physics: ScrollPhysics(),child:
+    return SingleChildScrollView(child:
     Column( children: <Widget>[
       Padding(padding: EdgeInsets.only(top: 20.0,bottom: 10.0),
         child: TextFormField(
@@ -238,12 +255,7 @@ class TestState extends State<Test>{
       ),
 
 
-   /*   Container(
-        width: 300.0,
-        height: 300.0,
-      ),
-*/
-     /* Container(alignment: Alignment.bottomCenter,
+      *//* Container(alignment: Alignment.bottomCenter,
 
           padding: EdgeInsets.all(10.0),
           child: ButtonTheme(
@@ -258,28 +270,20 @@ class TestState extends State<Test>{
                 child:Text("NEXT",style: TextStyle(color: Colors.white,
                 ),textScaleFactor: 1.2,) ,
                 onPressed:() => getCam()
-              *//*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*//*
+              *//**//*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*//**//*
             ),
-          ))*/
+          ))*//*
 
 
     ]
     ));
   }
 
-}
+}*/
 
-class DynamicWidget extends StatelessWidget{
+class TextFieldWidget extends StatelessWidget{
 
-/*  @override
-  State<StatefulWidget> createState() {
-
-    return DynamicWidgetState();
-  }
-}
-
-class DynamicWidgetState extends State<DynamicWidget> {*/
-   TextEditingController textController = TextEditingController();
+  TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -293,8 +297,4 @@ class DynamicWidgetState extends State<DynamicWidget> {*/
       ),
     );
   }
-
 }
-
-
-

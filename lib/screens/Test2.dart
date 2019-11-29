@@ -4,28 +4,28 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-class Test extends StatefulWidget {
+class Test2 extends StatefulWidget {
   final Map jsonData;
 
-  Test({Key key, this.jsonData}) : super(key: key);
+  Test2({Key key, this.jsonData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState(
       ) {
-    return TestState(jsonData);
+    return Test2State(jsonData);
   }
 }
 
-class TestState extends State<Test>{
+class Test2State extends State<Test2>{
   String jsonKey;
   String displayKey;
   String keypad;
   List addFields;
   Map jsonData;
-  TestState(this.jsonData);
+  Test2State(this.jsonData);
   TextEditingController nameController= TextEditingController();
   int radioValue=0;
-  List<DynamicWidget> dynamicList = [];
+  List<TextFieldWidget> dynamicList = [];
 
   File image;
 
@@ -46,7 +46,7 @@ class TestState extends State<Test>{
     jsonKey = addFields[i]['json_key'];
     displayKey = addFields[i]['display_key'];
     keypad = addFields[i]['rule'];
-    dynamicList.add(DynamicWidget());
+    dynamicList.add(TextFieldWidget());
   }
 
   run(){
@@ -75,13 +75,14 @@ class TestState extends State<Test>{
         appBar: AppBar( title: Text( "Manage Visitors" ) ,
           backgroundColor: Colors.lightBlueAccent ,) ,
         body: Column(children: <Widget>[
-           first(),
-          
-          Flexible(
-              child: ListView.builder(
-                itemCount: dynamicList.length,
-                itemBuilder: (_, index) => dynamicList[index],
-              ),
+          Flexible(flex: 2,
+            child: first(), ),
+
+          Flexible(flex: 2,
+            child: ListView.builder(
+              itemCount: dynamicList.length,
+              itemBuilder: (_, index) => dynamicList[index],
+            ),
           ),
 
           Container(alignment: Alignment.bottomCenter,
@@ -111,8 +112,7 @@ class TestState extends State<Test>{
 
   first(){
 
-    return SingleChildScrollView(
-        physics: ScrollPhysics(),child:
+    return SingleChildScrollView(child:
     Column( children: <Widget>[
       Padding(padding: EdgeInsets.only(top: 20.0,bottom: 10.0),
         child: TextFormField(
@@ -238,12 +238,12 @@ class TestState extends State<Test>{
       ),
 
 
-   /*   Container(
+      Container(
         width: 300.0,
         height: 300.0,
       ),
-*/
-     /* Container(alignment: Alignment.bottomCenter,
+
+      /* Container(alignment: Alignment.bottomCenter,
 
           padding: EdgeInsets.all(10.0),
           child: ButtonTheme(
@@ -269,17 +269,28 @@ class TestState extends State<Test>{
 
 }
 
-class DynamicWidget extends StatelessWidget{
+class TextFieldWidget extends StatelessWidget{
 
-/*  @override
-  State<StatefulWidget> createState() {
+  TextEditingController textController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
 
-    return DynamicWidgetState();
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      child: TextField(
+        controller: textController,
+        decoration: InputDecoration(
+          hintText: " Enter Data ",
+        ),
+      ),
+    );
   }
 }
 
-class DynamicWidgetState extends State<DynamicWidget> {*/
-   TextEditingController textController = TextEditingController();
+
+class RadioButtonWidget extends StatelessWidget{
+
+  TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -295,6 +306,28 @@ class DynamicWidgetState extends State<DynamicWidget> {*/
   }
 
 }
+
+
+class DropDownWidget extends StatelessWidget{
+
+  TextEditingController textController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      child: TextField(
+        controller: textController,
+        decoration: InputDecoration(
+          hintText: " Enter Data ",
+        ),
+      ),
+    );
+  }
+
+}
+
+
 
 
 
