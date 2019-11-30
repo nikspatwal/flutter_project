@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vinnoba/keys/JsonKeys.dart';
 import 'package:vinnoba/keys/PrefKeys.dart';
-import 'package:vinnoba/screens/Camtry.dart';
-import 'package:vinnoba/screens/Test.dart';
+
+import 'package:vinnoba/screens/Test2.dart';
 
 import 'package:vinnoba/utils/BasicUtils.dart';
 import 'package:vinnoba/utils/api.dart';
@@ -135,7 +135,7 @@ class NewVisitorOneState extends State<NewVisitorOne>{
     print(body.toString());
     Navigator.push(context,
         MaterialPageRoute(builder: (context) =>
-            Test(jsonData: body)));
+            Test2(jsonData: body)));
 
 
   }
