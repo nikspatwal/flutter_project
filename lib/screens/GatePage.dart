@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +18,6 @@ class GatePage extends StatefulWidget{
 }
 
 class GatePageState extends State<GatePage>{
-
-  TextEditingController mobileNoController = TextEditingController();
 
   List<String> gates= List<String>();
   String dropdownValue ;
