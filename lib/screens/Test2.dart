@@ -73,11 +73,11 @@ class Test2State extends State<Test2> {
             break;
           }
 
-        case 'RADIOBUTTON':
+       /* case 'RADIOBUTTON':
           {
             dynamicList.add(RadioButtonWidget(subField: subField));
             break;
-          }
+          }*/
 
 /*        case 'CALENDAR': {
           dynamicList.add(CalendarWidget());
@@ -296,7 +296,7 @@ class TextFieldWidgetState extends State<TextFieldWidget> {
   }
 }
 
-
+/*
 class RadioButtonWidget extends StatefulWidget {
   final Map subField;
 
@@ -340,34 +340,13 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
         fontWeight: FontWeight.bold,
         fontSize: 18.0,),),
 
-    RadioButtonGroup(
-    orientation: GroupedButtonsOrientation.HORIZONTAL,
-    margin: const EdgeInsets.only(left: 12.0),
-    onSelected: (String selected) => setState((){
-    dynamicRadioValue = selected;
-    }),
-    labels: <String>[
-    "One",
-    "Two",
-    ],
-    picked: dynamicRadioValue,
-    itemBuilder: (Radio rb, Text txt, int i){
-    return Row(
-    children: <Widget>[
-
-    rb,
-    txt,
-    ],
-
-    );}
-    ),
 
 
     ],)
 
     );
     }
-  }
+  }*/
 
 
   class DropDownWidget extends StatefulWidget{
@@ -382,9 +361,26 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
   class DropDownWidgetState extends State<DropDownWidget> {
   Map subField;
   DropDownWidgetState(this.subField);
-  List<String> menu=["Select","A","B","C","D"];
-  String dropdownValue= "Select";
+  List<String> menu = List<String>();
+  String dropdownValue;
+  List subMenu;
+  int n;
   TextEditingController textController = TextEditingController();
+
+  dropdownRun(){
+    subMenu = subField['values'];
+    n=subMenu.length;
+    for (int i=0;i<n;i++){
+      menu.add(subField['values'][i]);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.dropdownRun();
+  }
 
   @override
   Widget build(BuildContext context) {
