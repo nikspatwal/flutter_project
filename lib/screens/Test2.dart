@@ -73,11 +73,11 @@ class Test2State extends State<Test2> {
             break;
           }
 
-       /* case 'RADIOBUTTON':
+        case 'RADIOBUTTON':
           {
             dynamicList.add(RadioButtonWidget(subField: subField));
             break;
-          }*/
+          }
 
 /*        case 'CALENDAR': {
           dynamicList.add(CalendarWidget());
@@ -107,8 +107,9 @@ class Test2State extends State<Test2> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 10.0),
+                padding: EdgeInsets.only(top: 20.0, bottom: 10.0,right: 12.0,left: 12.0),
                 child: TextFormField(
+
                     keyboardType: TextInputType.text,
                     controller: nameController,
                     style: TextStyle(
@@ -284,7 +285,7 @@ class TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8.0),
+      margin: EdgeInsets.all(12.0),
       child: TextField(
         controller: textController,
         keyboardType: TextInputType.text,
@@ -296,7 +297,6 @@ class TextFieldWidgetState extends State<TextFieldWidget> {
   }
 }
 
-/*
 class RadioButtonWidget extends StatefulWidget {
   final Map subField;
 
@@ -314,8 +314,9 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
 
   RadioButtonWidgetState(this.subField);
 
-  String dynamicRadioValue = "";
-  List<String> items = [];
+  int dynamicRadioValue = -1;
+  String currText = "";
+  List<dynamic> items = [];
 
   radioRun() {
     items = subField['values'];
@@ -335,10 +336,45 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
     return Container(
       margin: EdgeInsets.all(8.0),
       child: Column(children: <Widget>[
-      Text(subField['display_key'].toString(), textAlign: TextAlign.left,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 18.0,),),
+        Text(
+        subField['display_key'],
+        textAlign: TextAlign.left,
+        style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+      ),,
+
+        ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: n,
+          itemBuilder: (context, index) {
+
+            return RadioListTile(
+              value: index,
+              groupValue: dynamicRadioValue,
+              onChanged: (ind) => setState(() => dynamicRadioValue = ind),
+              title: Text(items[index]),
+            );
+          },
+            )
+                /*(int i) => RadioListTile
+                  (title:Text(items[i].toString())                  ,
+                  value: i,
+                    groupValue: dynamicRadioValue,
+                    onChanged: (int value){
+                      setState(() {
+                        dynamicRadioValue = value;
+                        currText = i.toString();
+                      });
+                    },)*//*<int>(
+              value: i,
+              groupValue: dynamicRadioValue,
+              onChanged: (int value){
+                setState(() {
+                  dynamicRadioValue = value;
+                });
+              },
+            ),*/
+          
 
 
 
@@ -346,7 +382,7 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
 
     );
     }
-  }*/
+  }
 
 
   class DropDownWidget extends StatefulWidget{
@@ -385,7 +421,7 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
   @override
   Widget build(BuildContext context) {
   return Container(
-  margin: EdgeInsets.all(8.0),
+  margin: EdgeInsets.all(12.0),
   child: Container(
 
   width: 200.0,
@@ -400,6 +436,7 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
   child: ButtonTheme(
   alignedDropdown: true,
   child: DropdownButton<String>(
+    hint: Text("Select"),
   value: dropdownValue,
   icon: Icon(Icons.keyboard_arrow_down),
   iconSize: 24,
@@ -408,6 +445,7 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
   onChanged: (String newValue) {
   setState(() {
   dropdownValue = newValue;
+
   });
   },
   items: menu.map((item) {

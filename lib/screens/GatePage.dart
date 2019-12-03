@@ -91,6 +91,7 @@ class GatePageState extends State<GatePage>{
                         child: ButtonTheme(
                             alignedDropdown: true,
                             child: DropdownButton<String>(
+                              hint: Text("Select"),
                               value: dropdownValue,
                               icon: Icon(Icons.keyboard_arrow_down),
                               iconSize: 24,
