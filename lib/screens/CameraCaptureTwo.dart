@@ -71,11 +71,11 @@ class CameraCaptureTwoState extends State<CameraCaptureTwo> {
 
                 await camController.takePicture(imagePath);
 
-                Navigator.push(
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => DisplayPictureScreen(imagePath)),
-                );
+                );*/
               } catch (e) {
                 print(e);
               }

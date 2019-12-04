@@ -1,18 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:vinnoba/screens/HomePage.dart';
+import 'package:vinnoba/screens/Test2.dart';
 
 class DisplayPictureScreen extends StatefulWidget{
-  final String imagePath;
-  DisplayPictureScreen(this.imagePath);
+  final File image;
+  DisplayPictureScreen(this.image);
   @override
-  DisplayPictureScreenState createState() =>DisplayPictureScreenState(imagePath);
+  DisplayPictureScreenState createState() =>DisplayPictureScreenState(image);
 }
 
 
 class DisplayPictureScreenState extends State<DisplayPictureScreen> {
-  final String imagePath;
-  DisplayPictureScreenState(this.imagePath);
+  final File image;
+  DisplayPictureScreenState(this.image);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +22,7 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Column( children: <Widget>[
-        Container(child: Image.file(File(imagePath),fit: BoxFit.cover,
+        Container(child: Image.file(image,fit: BoxFit.cover,
         ),),
 
         Row(
@@ -38,7 +40,11 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                     child:Text("YES",style: TextStyle(color: Colors.white,
                     ),
                       textScaleFactor: 1.2,) ,
-                    onPressed: () {}
+                    onPressed: () =>Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomePage()),
+                    )
                 ),
               ),),
 
@@ -55,7 +61,11 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
                     child:Text("NO",style: TextStyle(color: Colors.white,
                     ),textScaleFactor: 1.2,) ,
-                    onPressed:() {}),
+                    onPressed:() =>Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Test2()),
+                    )),
               ),)
           ],
         )

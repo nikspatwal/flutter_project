@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import 'DisplayPictureScreen.dart';
 
 class Test2 extends StatefulWidget {
   final Map jsonData;
@@ -34,15 +32,20 @@ class Test2State extends State<Test2> {
 
   File image;
 
-  Future getCam() async {
+  Future getCam(context) async {
+    try{
     var pic = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() async {
       image = pic;
-      final imagePath =
-      join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
 
-      print(imagePath);
+      print(image.path);
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context) => DisplayPictureScreen(image)));
     });
+        }catch (e) {
+      print(e);
+    }
+
   }
 
   impText(int i) {
@@ -254,7 +257,7 @@ class Test2State extends State<Test2> {
                         child: Text(
                           "NEXT", style: TextStyle(color: Colors.white,
                         ), textScaleFactor: 1.2,),
-                        onPressed: () => getCam()
+                        onPressed: () => getCam(context)
                       /*Navigator.push(context, MaterialPageRoute(builder: (context) =>  cameraCaptureOne()))*/
                     ),
                   ))
@@ -340,7 +343,7 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
         subField['display_key'],
         textAlign: TextAlign.left,
         style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
-      ),,
+      ),
 
         ListView.builder(
           scrollDirection: Axis.vertical,
