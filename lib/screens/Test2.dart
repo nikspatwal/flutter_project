@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'DisplayPictureScreen.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class Test2 extends StatefulWidget {
   final Map jsonData;
@@ -82,8 +83,8 @@ class Test2State extends State<Test2> {
             break;
           }
 
-/*        case 'CALENDAR': {
-          dynamicList.add(CalendarWidget());
+        /*case 'CALENDAR': {
+          dynamicList.add(CalendarWidget(subField: subField));
           break;
         }*/
 
@@ -466,27 +467,33 @@ class RadioButtonWidgetState extends State<RadioButtonWidget> {
   }
 
 
-/*class CalendarWidget extends StatefulWidget{
+/*
+class CalendarWidget extends StatefulWidget{
+  Map subField;
+
+  CalendarWidget({Key key , this.subField}) : super(key : key);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return CalendarWidgetState();
+    return CalendarWidgetState(subField);
   }
 }
 
 class CalendarWidgetState extends State<CalendarWidget> {
-  TextEditingController textController = TextEditingController();
+  Map subField;
+  final dateFormat = DateFormat;
+  DateTime date;
+  TimeOfDay time;
+
+  CalendarWidgetState(this.subField);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(8.0),
-      child: TextField(
-        controller: textController,
-        decoration: InputDecoration(
-          hintText: " Enter Data ",
-        ),
-      ),
-    );
-  }
-}*/
+      child: DateTimePickerFormField(
+        format: dateFormat,
+        decoration: InputDecoration(labelText: 'Date'),
+        onChanged: (dt) => setState(() => date = dt),
+      ),)
+*/

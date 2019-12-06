@@ -22,8 +22,8 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Column( children: <Widget>[
-        Container(child: Image.file(image,fit: BoxFit.cover,
-        ),),
+        Expanded(child: Container(child: Image.file(image,fit: BoxFit.cover,
+        ),)),
 
         Row(
           children: <Widget>[
