@@ -75,10 +75,10 @@ class _$AllApi extends AllApi {
   }
 
   Future<Response> getVisitorImage(String entityId, String visitorId,
-      String visitorHistoryId, String xToken) {
+      String visitorHistoryId, String content, String xToken) {
     final $url =
         '/api/entity/$entityId/visitor/$visitorId/visitorhistory/$visitorHistoryId/image/';
-    final $headers = {'x-auth-token': xToken};
+    final $headers = {'Content-Type': content, 'x-auth-token': xToken};
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }

@@ -45,11 +45,11 @@ abstract class AllApi extends ChopperService {
       );
 
   @Get(path:"/api/entity/{entityId}/visitor/{visitorId}/visitorhistory/{visitorhistoryId}/image/")
-  @Multipart()
   Future<Response> getVisitorImage(
       @Path('entityId') String entityId,
       @Path('visitorId') String visitorId,
       @Path('visitorhistoryId') String visitorHistoryId,
+      @Header( "Content-Type" ) String content,
       @Header( "x-auth-token" ) String xToken
       );
 
