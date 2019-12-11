@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:vinnoba/keys/JsonKeys.dart';
 import 'package:vinnoba/keys/PrefKeys.dart';
 import 'package:vinnoba/screens/HomePage.dart';
+import 'package:vinnoba/utils/ApiUtils.dart';
 import 'package:vinnoba/utils/BasicUtils.dart';
 import 'package:vinnoba/utils/api.dart';
 
@@ -36,12 +37,19 @@ class GatePageState extends State<GatePage>{
      print(n);
      print(response[0]['gate_name'].toString());
 
-    setState(() {
-      for(int i=0;i<n;i++){
-        gates.add(response[i]['gate_name'].toString());
-      }
-      dropdownValue=gates[0];
-    });
+     if(data.statusCode == 401){
+       if( ApiUtils.refreshTokenApi(context) == true){
+         gateQueryApi(dropdownValue);
+       }
+     }
+     else if(data.statusCode == 200){
+       setState(() {
+         for(int i=0;i<n;i++){
+           gates.add(response[i]['gate_name'].toString());
+         }
+         dropdownValue=gates[0];
+       });
+     }
   }
 
   @override
