@@ -21,17 +21,20 @@ class ApiUtils{
       "server_unique_id": serverUniqueId,
     };
 
-    print(userName);
+    print("REFRESH 1 ");
     Response data = await Provider.of<AllApi>(context).refreshToken(
         refreshToken, "application/json", "application/json", refreshTokenMap);
+    print("REFRESH 2 ");
 
     if(data.statusCode==200){
       Map header = data.headers;
+      BasicUtils.savePreferences( PrefKeys.token ,header['x-auth-token'] );
       Map body = json.decode(data.bodyString);
-      print("HERE IT COMES>>>>>>>");
+      print("REFRESH 3");
       print(header.toString());
       print(body.toString());
-      return true;
+      int code = data.statusCode;
+      return code;
     }
   }
 }

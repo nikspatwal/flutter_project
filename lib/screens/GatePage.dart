@@ -32,30 +32,37 @@ class GatePageState extends State<GatePage>{
     String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
     Response data = await Provider.of<AllApi>( context ).
     gateQuery(xToken, entityId, body);
-     response = json.decode( data.bodyString );
-     n= response.length;
-     print(n);
-     print(response[0]['gate_name'].toString());
 
-     if(data.statusCode == 401){
-       if( ApiUtils.refreshTokenApi(context) == true){
+    print("REFRESH 5 ");
+
+    if(data.statusCode == 200){
+
+      response = json.decode( data.bodyString );
+      n= response.length;
+      print(n);
+      print(response[0]['gate_name'].toString());
+
+      setState(() {
+        for(int i=0;i<n;i++){
+          gates.add(response[i]['gate_name'].toString());
+        }
+        dropdownValue=gates[0];
+      });
+    }
+    else if(data.statusCode == 401)  {
+      int code = await ApiUtils.refreshTokenApi(context);
+       if( code == 200){
+         print("REFRESH 4 ");
          gateQueryApi(dropdownValue);
        }
      }
-     else if(data.statusCode == 200){
-       setState(() {
-         for(int i=0;i<n;i++){
-           gates.add(response[i]['gate_name'].toString());
-         }
-         dropdownValue=gates[0];
-       });
-     }
+
   }
 
   @override
   void initState() {
     super.initState();
-    this.gateQueryApi(dropdownValue);
+    gateQueryApi(dropdownValue);
   }
 
 
