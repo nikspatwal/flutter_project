@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vinnoba/screens/NewVisitorOne.dart';
+import 'package:vinnoba/screens/Social.dart';
 import 'package:vinnoba/screens/Visitors.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,7 +20,18 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar( title: Text( "Manage Visitors" ) ,
         backgroundColor: Colors.lightBlueAccent , ) ,
+
       backgroundColor: Colors.white ,
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text("Social"),
+              onTap:() =>  Navigator.push(context, MaterialPageRoute(builder: (context) => Social())),
+            ),
+          ],
+        ),
+      ),
       body: Column(
           children: <Widget>[
 

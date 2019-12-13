@@ -59,6 +59,7 @@ class LoginPageState extends State<LoginPage> {
 
 
                           child: TextFormField(
+                              cursorColor: Colors.white70,
                               keyboardType: TextInputType.text,
                               controller: userController ,
                               style: TextStyle(

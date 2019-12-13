@@ -288,11 +288,20 @@ class TextFieldWidgetState extends State<TextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    var type=null;
+    if(subField["rule"]=="Alphanumeric"){
+      type=TextInputType.text;
+    }else if(subField["rule"]=="Numeric"){
+      type=TextInputType.number;
+    }
+
+
     return Container(
       margin: EdgeInsets.all(12.0),
       child: TextField(
         controller: textController,
-        keyboardType: TextInputType.text,
+        keyboardType: type,
         decoration: InputDecoration(
           hintText: subField['display_key'].toString(),
         ),
