@@ -25,11 +25,12 @@ class SocialState extends State<Social>{
               shape: BoxShape.circle,
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: NetworkImage("https://scontent.fdel1-1.fna.fbcdn.net/v/t1.0-9/43952769_1931833063570877_1734454089300836352_n.jpg?_nc_cat=109&_nc_ohc=xY-T377edBIAQk83DKi9r1KtXZmImSyF4SH7KYPWgfsdobSVOkMXOHZ5g&_nc_ht=scontent.fdel1-1.fna&oh=a64db1346f9c7cfdd9364611aa7ea9a0&oe=5E76F776)")
+                image: AssetImage("assets/images/1.jpeg"),
             ),
           )
           ),Expanded(
               child: Container(
+
                 margin: EdgeInsets.only(
                   left: 16.0, right: 16.0
                 ),
@@ -43,6 +44,7 @@ class SocialState extends State<Social>{
                   )
                 ),
                 child: TextField(
+
                   controller: textController,
                   keyboardType: TextInputType.text,
                   style: TextStyle(
@@ -51,15 +53,42 @@ class SocialState extends State<Social>{
                       decoration: TextDecoration.none
                   ),
                   decoration: InputDecoration(
-                    hintText: "Write something here...",
-                    hintStyle:
+                    border: InputBorder.none,
+                    hintText: "Write something here...\n यहाँ कुछ लिखिए...",
+                    hintStyle:TextStyle(fontSize: 14.0)
                   ),
 
                 ),
-              ))
+              )),
+          Column(
+            children: <Widget>[
+              new Padding(
+                padding:  EdgeInsets.only(
+                  left: 8.0, right: 8.0, top: 12.0,bottom: 0.0
+                ),
+                child:  Icon(Icons.photo_library),
+              ),
+              new Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Photo",
+                  style: TextStyle(fontSize: 12.0),
+                ),
+              )
+            ],
+          ),
         ],
       ),
     );
+  }
+
+
+
+
+
+  Posts(){
+
+
   }
 
 
@@ -71,8 +100,12 @@ class SocialState extends State<Social>{
     // TODO: implement build
     return Scaffold(
       body: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           createPost(),
+          Divider(),
+          Posts()
+
         ],
       ),
     );
