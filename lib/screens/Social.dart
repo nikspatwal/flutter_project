@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
+import 'FacebookPost.dart';
+
 class Social extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -10,6 +12,38 @@ class Social extends StatefulWidget{
 }
 
 class SocialState extends State<Social>{
+
+
+  var postImages = [
+     "assets/images/1.jpeg",
+     "assets/images/2.jpeg",
+     "assets/images/3.jpeg",
+     "assets/images/4.jpeg",] ;
+  var postNames = ["Rachel Green",
+     "Monica Geller",
+    "Chandler Bing",
+    "Pheobe Buffay",
+  ];
+  var postContents = [
+     "Loving the Weather... Chilling Cold!!..",
+     "Social Media is love.. Connecting individual to the world... Sounds Awesome!...",
+     "Merry Christmas in Advance.",
+    "Delhi is burning. Protest is on fire people."
+  ] ;
+  var postTimes = [
+    "10 mins ago · ",
+    "20 mins ago · ",
+     "1 hour ago · ",
+     "1 hour ago · "
+  ];
+  var postLikes = [
+     "Rose Geller and 6 others",
+     "Joey Tribiaani and 16 others",
+     "Jason Momoa and 6 others",
+     "Gerard Butler and 16 others"
+  ] ;
+  var postComments = ["12", "24", "16",  "34"];
+  var postShares = [ "1",  "2",  "3",  "2"];
 
   TextEditingController textController = TextEditingController();
   createPost(){
@@ -86,10 +120,7 @@ class SocialState extends State<Social>{
 
 
 
-  Posts(){
 
-
-  }
 
 
 
@@ -104,7 +135,38 @@ class SocialState extends State<Social>{
         children: <Widget>[
           createPost(),
           Divider(),
-          Posts()
+          FacebookPost(
+              image: postImages[0],
+              content: postContents[0],
+              name: postNames[0],
+              likes: postLikes[0],
+              comments: postComments[0],
+              shares: postShares[0],
+              time: postTimes[0]),
+          FacebookPost(
+              image: postImages[1],
+              content: postContents[1],
+              name: postNames[1],
+              likes: postLikes[1],
+              comments: postComments[1],
+              shares: postShares[1],
+              time: postTimes[1]),
+          FacebookPost(
+              image: postImages[2],
+              content: postContents[2],
+              name: postNames[2],
+              likes: postLikes[2],
+              comments: postComments[2],
+              shares: postShares[2],
+              time: postTimes[2]),
+          FacebookPost(
+              image: postImages[3],
+              content: postContents[3],
+              name: postNames[3],
+              likes: postLikes[3],
+              comments: postComments[3],
+              shares: postShares[3],
+              time: postTimes[3])
 
         ],
       ),
