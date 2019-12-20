@@ -1,20 +1,30 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:chopper/chopper.dart' as prefix0;
+import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vinnoba/keys/JsonKeys.dart';
+import 'package:vinnoba/keys/PrefKeys.dart';
 import 'package:vinnoba/screens/HomePage.dart';
 import 'package:vinnoba/screens/Test2.dart';
+import 'package:vinnoba/utils/BasicUtils.dart';
+import 'package:vinnoba/utils/api.dart';
 
 class DisplayPictureScreen extends StatefulWidget{
   final File image;
-  DisplayPictureScreen(this.image);
+  Map sendBody;
+  DisplayPictureScreen(this.image,this.sendBody);
   @override
-  DisplayPictureScreenState createState() =>DisplayPictureScreenState(image);
+  DisplayPictureScreenState createState() =>DisplayPictureScreenState(image,sendBody);
 }
 
 
 class DisplayPictureScreenState extends State<DisplayPictureScreen> {
   final File image;
-  DisplayPictureScreenState(this.image);
+  Map body;
+  DisplayPictureScreenState(this.image,this.body);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,5 +87,15 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
 
 
     );
+  }
+  
+  insertVisitorApi()async{
+    String visitorId = await BasicUtils.getPreferences(JsonKeys.visitorId);
+    String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
+    String xToken = await BasicUtils.getPreferences(PrefKeys.token);
+    Response data = await Provider.of<AllApi>(context)
+    .insertVisitor(entityId, visitorId, xToken, body);
+    Map one = json.decode(data.toString());
+    print("HURRAYYY!!.....  $one");
   }
 }

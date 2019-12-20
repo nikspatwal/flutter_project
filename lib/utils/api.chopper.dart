@@ -12,8 +12,10 @@ class _$AllApi extends AllApi {
     this.client = client;
   }
 
+  @override
   final definitionType = AllApi;
 
+  @override
   Future<Response> login(String auth, Map map, String type) {
     final $url = '/api/user/sessions';
     final $headers = {'Authorization': auth, 'Content-Type': type};
@@ -23,6 +25,7 @@ class _$AllApi extends AllApi {
     return client.send<dynamic, dynamic>($request);
   }
 
+  @override
   Future<Response> refreshToken(
       String refreshToken, String content, String accept, Map refreshTokenMap) {
     final $url = '/api/user/refreshtoken';
@@ -37,6 +40,7 @@ class _$AllApi extends AllApi {
     return client.send<dynamic, dynamic>($request);
   }
 
+  @override
   Future<Response> registerVisitor(String entityId, String xToken,
       String content, String accept, Map mobileNo) {
     final $url = '/api/entity/$entityId/visitor';
@@ -51,6 +55,7 @@ class _$AllApi extends AllApi {
     return client.send<dynamic, dynamic>($request);
   }
 
+  @override
   Future<Response> gateQuery(String xToken, String entityId, Map body) {
     final $url = '/api/entity/$entityId/gate/query';
     final $headers = {'x-auth-token': xToken};
@@ -60,6 +65,7 @@ class _$AllApi extends AllApi {
     return client.send<dynamic, dynamic>($request);
   }
 
+  @override
   Future<Response> visitorHistory(
       String entityId, String xToken, String content, String accept, Map body) {
     final $url = '/api/entity/$entityId/visitorhistory/query';
@@ -74,12 +80,24 @@ class _$AllApi extends AllApi {
     return client.send<dynamic, dynamic>($request);
   }
 
+  @override
   Future<Response> getVisitorImage(String entityId, String visitorId,
       String visitorHistoryId, String content, String xToken) {
     final $url =
         '/api/entity/$entityId/visitor/$visitorId/visitorhistory/$visitorHistoryId/image/';
     final $headers = {'Content-Type': content, 'x-auth-token': xToken};
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response> insertVisitor(
+      String entityId, String visitorId, String xToken, Map body) {
+    final $url = '/api/entity/{entity_id}/visitor/$visitorId';
+    final $headers = {'x-auth-token': xToken};
+    final $body = body;
+    final $request =
+        Request('PUT', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
 }

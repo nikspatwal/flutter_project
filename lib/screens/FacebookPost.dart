@@ -128,7 +128,7 @@ class FacebookPostState extends State<FacebookPost>{
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    /*Flexible(flex: 1,
+                    Flexible(flex: 1,
                         child: FlatButton.icon(onPressed:() => pressed(),
                       color: Colors.white,
                       icon: Icon(
@@ -140,9 +140,9 @@ class FacebookPostState extends State<FacebookPost>{
                             color: liked? Colors.blue: Colors.grey),
 
                       ),
-                    )),*/
+                    )),
 
-                    Flexible(flex:1,
+                    /*Flexible(flex:1,
                         child: ReactiveButton(icons: _facebook,
                         onSelected: (ReactiveIconDefinition button){
                           setState(() {
@@ -172,9 +172,9 @@ class FacebookPostState extends State<FacebookPost>{
                               Text(emo,style: TextStyle(color: Colors.blue),)
                             ],
                           ),)
-                    )),
-                   /* Flexible(flex:1,
-                        child: FlatButton.icon(onPressed:() => pressed(),
+                    )),*/
+                    Flexible(flex:1,
+                        child: FlatButton.icon(onPressed:() => print("ONE"),
                       color: Colors.white,
                       icon: Icon(Icons.chat_bubble_outline),
                       label: Text("Comment",
@@ -183,13 +183,13 @@ class FacebookPostState extends State<FacebookPost>{
                       ),)),
 
                     Flexible(flex:1,
-                        child:FlatButton.icon(onPressed:() => pressed(),
+                        child:FlatButton.icon(onPressed:() => print("TWO"),
                       color: Colors.white,
                       icon: Icon(Icons.forward),
                       label: Text("Share",
                           style: TextStyle(fontFamily: 'icomoon',
                               color: Colors.grey)
-                      ),)),*/
+                      ),)),
 
 
 
