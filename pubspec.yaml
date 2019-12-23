@@ -32,8 +32,10 @@ dependencies:
   image_picker: ^0.6.1+11
 #  flutter_form_builder: ^3.6.1
   grouped_buttons: ^1.0.4
-  datetime_picker_formfield: ^0.4.3
+#  datetime_picker_formfield: ^0.4.3
   flutter_reactive_button: ^1.1.0
+  intl: ^0.16.0
+
 
 
 

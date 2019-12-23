@@ -68,6 +68,16 @@ class GatePageState extends State<GatePage>{
 
   @override
   Widget build(BuildContext context){
+    if(gates.length == 0){
+      return Scaffold(
+        appBar: AppBar( title: Text( "Manage Visitors" ) ,
+          backgroundColor: Colors.lightBlueAccent , ) ,
+        body: Center(
+          child: CircularProgressIndicator(),
+        ) ,
+      );
+
+    }
 
   return Scaffold(
         appBar: AppBar( title: Text( "Manage Visitors" ) ,
