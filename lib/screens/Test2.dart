@@ -24,6 +24,7 @@ class Test2State extends State<Test2> {
   List addFields;
   Map jsonData;
   int dynamicRadioValue = 0;
+  Map sendBody;
 
   Test2State(this.jsonData);
 
@@ -40,8 +41,9 @@ class Test2State extends State<Test2> {
       image = pic;
 
       print(image.path);
+      sendBody = createMap(radioValue);
       Navigator.push(context, MaterialPageRoute(
-          builder: (context) => DisplayPictureScreen(image)));
+          builder: (context) => DisplayPictureScreen(image,sendBody)));
     });
         }catch (e) {
       print(e);
@@ -162,8 +164,12 @@ class Test2State extends State<Test2> {
                           Radio(
                             value: 1,
                             groupValue: radioValue,
-                            onChanged: (int i) =>
-                                setState(() => radioValue = i),
+                            onChanged: (int i){
+                              setState(() {
+                                radioValue = i;
+
+                              });
+                            }
                           ),
                           Text(
                             "Male",
@@ -265,6 +271,29 @@ class Test2State extends State<Test2> {
             ],
           ),
         ));
+  }
+
+   createMap(radioValue) {
+    String gender = "U";
+    if (radioValue==1){
+      gender = "M";
+    }
+    else if(radioValue==2){
+      gender = "F";
+    }
+    else {
+      gender = "O";
+    }
+
+    List name = nameController.toString().split(" ");
+    //int n = name.length;
+    sendBody = {
+      "first_name" : name[0],
+      "last_name" : name[1],
+      "gender" : gender
+    };
+
+    return sendBody;
   }
 }
 

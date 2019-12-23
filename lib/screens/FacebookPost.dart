@@ -142,39 +142,10 @@ class FacebookPostState extends State<FacebookPost>{
                       ),
                     )),
 
-                   /* Flexible(flex:1,
-                        child: ReactiveButton(icons: _facebook,
-                        onSelected: (ReactiveIconDefinition button){
-                          setState(() {
-                            facebook = button.code;
-                            emo=button.code;
-                          });
-                        },
-                        onTap: (){
-                          print("TAP");
-                        },
-                        child: facebook==null?
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Icon(Icons.thumb_up),
-                              Text(emo,style: TextStyle(color: Colors.grey),)
-                            ],
-                          ),):
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Image.asset(
-                                'images/$facebook.png',
-                                width: 32.0,
-                                height: 32.0,
-                              ),
-                              Text(emo,style: TextStyle(color: Colors.blue),)
-                            ],
-                          ),)
-                    )),*/
                     Flexible(flex:1,
-                        child: FlatButton.icon(onPressed:() => pressed(),
+
+                        child: FlatButton.icon(onPressed:() => print("ONE"),
+
                       color: Colors.white,
                       icon: Icon(Icons.chat_bubble_outline),
                       label: Text("Comment",
@@ -183,7 +154,7 @@ class FacebookPostState extends State<FacebookPost>{
                       ),)),
 
                     Flexible(flex:1,
-                        child:FlatButton.icon(onPressed:() => pressed(),
+                        child:FlatButton.icon(onPressed:() => print("TWO"),
                       color: Colors.white,
                       icon: Icon(Icons.forward),
                       label: Text("Share",
