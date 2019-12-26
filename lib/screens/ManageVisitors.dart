@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vinnoba/screens/GatePage.dart';
 import 'package:vinnoba/screens/NewVisitorOne.dart';
+import 'package:vinnoba/screens/SettingPage.dart';
 import 'package:vinnoba/screens/Visitors.dart';
 
 class ManageVisitors extends StatefulWidget{
@@ -27,6 +28,12 @@ class ManageVisitorsState extends State{
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
+            DrawerHeader(
+              child: Text('Drawer Header'),
+              decoration: BoxDecoration(
+                color: Colors.lightBlueAccent,
+              ),
+            ),
             ListTile(
               title: Text("User"),
               onTap: () => Navigator.push(context,
@@ -60,7 +67,7 @@ class ManageVisitorsState extends State{
             ListTile(
               title: Text("Setting"),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => null)),
+                  MaterialPageRoute(builder: (context) => SettingPage())),
             ),
 
             ListTile(
