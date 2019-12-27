@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vinnoba/screens/GatePage.dart';
 import 'package:vinnoba/screens/NewVisitorOne.dart';
 import 'package:vinnoba/screens/SettingPage.dart';
+import 'package:vinnoba/screens/User.dart';
 import 'package:vinnoba/screens/Visitors.dart';
 
 class ManageVisitors extends StatefulWidget{
@@ -37,7 +38,7 @@ class ManageVisitorsState extends State{
             ListTile(
               title: Text("User"),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => null)),
+                  MaterialPageRoute(builder: (context) => User())),
             ),
 
             ListTile(

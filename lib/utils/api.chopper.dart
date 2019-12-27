@@ -100,4 +100,19 @@ class _$AllApi extends AllApi {
         Request('PUT', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response> getUserDetails(
+      String entityId, String content, String accept, String xToken, Map body) {
+    final $url = '/api/entity/$entityId/user/query';
+    final $headers = {
+      'Content-Type': content,
+      'Accept': accept,
+      'x-auth-token': xToken
+    };
+    final $body = body;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
