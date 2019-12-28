@@ -4,6 +4,7 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vinnoba/keys/PrefKeys.dart';
+import 'package:vinnoba/screens/ManageVisitors.dart';
 import 'package:vinnoba/screens/YesNo.dart';
 import 'package:vinnoba/utils/BasicUtils.dart';
 import 'package:vinnoba/utils/api.dart';
@@ -178,9 +179,13 @@ class LoginPageState extends State<LoginPage> {
     BasicUtils.savePreferences( PrefKeys.clientId ,id );
     BasicUtils.savePreferences( PrefKeys.entityId ,body['entity_id'] );
 
-    if (response.statusCode==200){
+    if (response.statusCode==200 && body['role']=="ADMIN"){
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => YesNo()));
+          MaterialPageRoute(builder: (context) => ManageVisitors()));
+    }
+    else if (response.statusCode == 200){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ManageVisitors()));
     }
     else{
       return Center(child: CircularProgressIndicator());

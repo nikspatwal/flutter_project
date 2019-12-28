@@ -47,11 +47,11 @@ class ManageVisitorsState extends State{
                   MaterialPageRoute(builder: (context) => Visitors())),
             ),
 
-            ListTile(
+            /*ListTile(
               title: Text("New Visitor"),
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => NewVisitorOne())),
-            ),
+            ),*/
 
             ListTile(
               title: Text("Employees Work History"),
@@ -59,11 +59,11 @@ class ManageVisitorsState extends State{
                   MaterialPageRoute(builder: (context) => null)),
             ),
 
-            ListTile(
+            /*ListTile(
               title: Text("Change Gate"),
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => GatePage())),
-            ),
+            ),*/
 
             ListTile(
               title: Text("Setting"),

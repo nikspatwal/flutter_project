@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:chopper/chopper.dart' as prefix0;
 part 'api.chopper.dart';
 
 @ChopperApi(baseUrl: "")
@@ -63,6 +62,15 @@ abstract class AllApi extends ChopperService {
 
   @Post(path: "/api/entity/{entityId}/user/query")
   Future<Response>getUserDetails(
+      @Path('entityId') String entityId,
+      @Header( "Content-Type" ) String content ,
+      @Header( "Accept" ) String accept ,
+      @Header( "x-auth-token" ) String xToken ,
+      @body Map body
+      );
+
+  @Post(path: "/api/entity/{entity_id}/user/workhistory/query")
+  Future<Response>employeeWorkHistory(
       @Path('entityId') String entityId,
       @Header( "Content-Type" ) String content ,
       @Header( "Accept" ) String accept ,

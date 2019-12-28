@@ -76,7 +76,9 @@ class UserState extends State<User>{
           itemCount: user.length,
           itemBuilder: (BuildContext context,i){
             return Card(child: ListTile(
-              title: Text("${user[i]['first_name']}  ${user[i]['last_name']}",
+              title: (user[i]['last_name'] != null)?Text("${user[i]['first_name']}  ${user[i]['last_name']}",
+                 style: TextStyle(fontSize: 14.0),):
+              Text("${user[i]['first_name']}",
                 style: TextStyle(fontSize: 14.0),),
               subtitle: Text(user[i]['mobile_no'],style: TextStyle(fontSize: 10.0),),
               leading:

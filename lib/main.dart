@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget{
     child:MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Vinnoba",
-      home: ManageVisitors(),
+      home: LoginPage(),
     )
     );
   }
