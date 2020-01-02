@@ -183,9 +183,9 @@ class LoginPageState extends State<LoginPage> {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => ManageVisitors()));
     }
-    else if (response.statusCode == 200){
+    else if (response.statusCode == 200 && body['role']!="ADMIN"){
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => ManageVisitors()));
+          MaterialPageRoute(builder: (context) => YesNo()));
     }
     else{
       return Center(child: CircularProgressIndicator());

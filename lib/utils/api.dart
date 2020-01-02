@@ -78,6 +78,16 @@ abstract class AllApi extends ChopperService {
       @body Map body
       );
 
+  @Post(path: "/api/entity/{entityId}/visitor/{visitorId}/visitorhistory")
+  Future<Response>logVisitorHistory(
+      @Path('entityId') String entityId,
+      @Path('visitorId') String visitorId,
+      @Header( "Content-Type" ) String content ,
+      @Header( "Accept" ) String accept ,
+      @Header( "x-auth-token" ) String xToken ,
+      @body Map body
+      );
+
   static AllApi create(){
     final client = ChopperClient(
       baseUrl: "https://vinnoba.com/vinnobaapi" ,

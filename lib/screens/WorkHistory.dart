@@ -60,11 +60,12 @@ class WorkHistoryState extends State<WorkHistory>{
   }
 
 
+
   @override
   void initState() {
     super.initState();
     for(int pg=1;pg)
-    this.employeeWorkHistoryApi(pg);
+      this.employeeWorkHistoryApi(pg);
   }
 
 

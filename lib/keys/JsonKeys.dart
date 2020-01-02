@@ -23,6 +23,7 @@ class JsonKeys{
    static String visitorId="visitor_id";
    static String gateId="gate_id";
    static String gateName="gate_name";
+   static String visitorHistoryId = "visitor_history_id";
 
 
 

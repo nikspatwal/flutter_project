@@ -48,11 +48,8 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                     child:Text("YES",style: TextStyle(color: Colors.white,
                     ),
                       textScaleFactor: 1.2,) ,
-                    onPressed: () =>Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomePage()),
-                    )
+                    onPressed: () => insertVisitorApi()
+
                 ),
               ),),
 
@@ -91,9 +88,38 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
     String visitorId = await BasicUtils.getPreferences(JsonKeys.visitorId);
     String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
     String xToken = await BasicUtils.getPreferences(PrefKeys.token);
+    String gateId = await BasicUtils.getPreferences(JsonKeys.gateId);
+    print(body);
+
+    Map map = {
+      "co_visitor": {
+        "co_visitor_count":0
+      },
+
+      "entry_gate_id": gateId,
+      "additional_fields":{
+        "room_no":0,
+        "age": 0
+      }
+
+    };
+
     Response data = await Provider.of<AllApi>(context)
     .insertVisitor(entityId, visitorId, xToken, body);
-    Map one = json.decode(data.toString());
-    print("HURRAYYY!!.....  $one");
+    //Map one = json.decode(data.toString());
+    print("HURRAYYY!!.....  ");
+    if(data.statusCode==200){
+      Response res = await Provider.of<AllApi>(context)
+          .logVisitorHistory(
+          entityId, visitorId, "application/json", "application/json", xToken, map);
+      print("RESPONSE----------------${res.bodyString}");
+      if(res.statusCode==200){
+        Map response = json.decode(res.bodyString);
+        BasicUtils.savePreferences( JsonKeys.visitorHistoryId ,response['visitor_history_id'] );
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()),);
+      }
+
+    }
+
   }
 }

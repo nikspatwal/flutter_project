@@ -285,13 +285,16 @@ class Test2State extends State<Test2> {
       gender = "O";
     }
 
-    List name = nameController.toString().split(" ");
+    List name = nameController.text.toString().split(" ");
+    print("NAME IS   ...... $name");
     //int n = name.length;
     sendBody = {
       "first_name" : name[0],
       "last_name" : name[1],
       "gender" : gender
     };
+
+    print(sendBody);
 
     return sendBody;
   }

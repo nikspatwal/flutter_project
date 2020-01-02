@@ -41,6 +41,7 @@ class VisitorsState extends State<Visitors>{
       Map data = json.decode(response.bodyString);
       visitor = data['data'];
       total = visitor.length;
+      print("SECOND     ${visitor[2]}");
 
       for (int i = 0; i < visitor.length; i++) {
         visitorId = visitor[i]['visitor_id'];
@@ -94,16 +95,15 @@ class VisitorsState extends State<Visitors>{
               title: Text("${visitor[i]['first_name']}  ${visitor[i]['last_name']}",
               style: TextStyle(fontSize: 14.0),),
               subtitle: Text(visitor[i]['mobile_no'],style: TextStyle(fontSize: 10.0),),
-              leading: Image.memory(img[i],
-                fit: BoxFit.contain,
-              ), /*CircleAvatar(
+              leading: (img[i].length>0)?Image.memory(img[i],
+                fit: BoxFit.contain,):CircleAvatar(
               backgroundColor: Colors.red,
               child: Text(visitor[i]['first_name'][0],
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.white,
                   )),
-            ),*/
+            ),
               trailing: Text(
                   DateFormat.yMEd().add_jms().format(
                       DateTime.fromMillisecondsSinceEpoch(
