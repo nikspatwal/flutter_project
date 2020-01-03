@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,7 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
                     child:Text("YES",style: TextStyle(color: Colors.white,
                     ),
                       textScaleFactor: 1.2,) ,
-                    onPressed: () => insertVisitorApi()
+                    onPressed: () => insertVisitorApi(image)
 
                 ),
               ),),
@@ -84,7 +85,7 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
     );
   }
   
-  insertVisitorApi()async{
+  insertVisitorApi(image)async{
     String visitorId = await BasicUtils.getPreferences(JsonKeys.visitorId);
     String entityId = await BasicUtils.getPreferences(PrefKeys.entityId);
     String xToken = await BasicUtils.getPreferences(PrefKeys.token);
@@ -115,11 +116,26 @@ class DisplayPictureScreenState extends State<DisplayPictureScreen> {
       print("RESPONSE----------------${res.bodyString}");
       if(res.statusCode==200){
         Map response = json.decode(res.bodyString);
+        String vhID= response['visitor_history_id'].toString();
         BasicUtils.savePreferences( JsonKeys.visitorHistoryId ,response['visitor_history_id'] );
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()),);
+        List<int> img = await prepare(image);
+        print("BYTES OF IMAGE.....    $img");
+        Response imageData = await Provider.of<AllApi>(context).uploadVisitorImage(entityId, visitorId, vhID, "application/json", xToken, img);
+        if(imageData.statusCode == 200){
+          Map body = json.decode(imageData.bodyString);
+          print("THE BODY IS.....  $body");
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+        }
+
       }
 
     }
 
+  }
+
+  prepare(File image)async{
+     Uint8List img =await image.readAsBytes();
+     List<int> conImg = img.toList(growable: false);
+     return conImg;
   }
 }

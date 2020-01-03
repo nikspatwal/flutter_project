@@ -145,4 +145,16 @@ class _$AllApi extends AllApi {
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response> uploadVisitorImage(String entityId, String visitorId,
+      String visitorHistoryId, String content, String xToken, List<int> bytes) {
+    final $url =
+        '/api/entity/$entityId/visitor/$visitorId/visitorhistory/$visitorHistoryId/image';
+    final $headers = {'Content-Type': content, 'x-auth-token': xToken};
+    final $parts = <PartValue>[PartValue<List<int>>('file', bytes)];
+    final $request = Request('POST', $url, client.baseUrl,
+        parts: $parts, multipart: true, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
 }
