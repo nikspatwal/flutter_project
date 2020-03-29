@@ -1,0 +1,6 @@
+REVIEWBOARD_URL = "https://reviewboard.athmin.com"
+REPOSITORY = "visitormanagementflutter"
+REPOSITORY_TYPE = "git"
+BRANCH = "version_1.0.0"
+LAND_DEST_BRANCH = "version_1.0.0"
+TRACKING_BRANCH= "version_1.0.0"
